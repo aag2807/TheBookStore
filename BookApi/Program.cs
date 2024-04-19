@@ -1,3 +1,5 @@
+using Wepsys.SMRI.WebAPI.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -14,6 +16,13 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+
+using (IServiceScope? serviceScope = app.Services.CreateScope())
+{
+    IServiceProvider? services = serviceScope.ServiceProvider;
+
+    app.ConfigureExceptionHandler();
 }
 
 app.UseHttpsRedirection();
