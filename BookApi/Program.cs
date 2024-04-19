@@ -1,10 +1,15 @@
-using Wepsys.SMRI.WebAPI.Extensions;
+using System.Diagnostics;
+using BookApi.Extensions;
+using Boundaries.Persistance.Context;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.ConfigureCORS();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.ConfigureDatabase();
 
 var app = builder.Build();
 
@@ -19,6 +24,7 @@ using (IServiceScope? serviceScope = app.Services.CreateScope())
     IServiceProvider? services = serviceScope.ServiceProvider;
 
     app.ConfigureExceptionHandler();
+    app.UseMiddleware<LoggerMiddleware>();
 }
 
 app.UseHttpsRedirection();

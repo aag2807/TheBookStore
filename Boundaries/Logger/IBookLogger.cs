@@ -1,6 +1,6 @@
 namespace Boundaries.Logger;
 
-public interface ILogger
+public interface IBookLogger
 {
     /// <summary>
     /// Logs a message of type T with the specified log type.

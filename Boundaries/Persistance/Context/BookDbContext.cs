@@ -15,6 +15,10 @@ namespace Boundaries.Persistance.Context;
 /// </summary>
 public class BookDbContext : DbContext, IBookDbContext
 {
+    public BookDbContext(DbContextOptions<BookDbContext> options) : base(options)
+    {
+    }
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         Arguments.NotNull(optionsBuilder, nameof(optionsBuilder));

@@ -1,9 +1,9 @@
 namespace Boundaries.Logger;
 
-public sealed class Logger : ILogger
+public sealed class BookLogger : IBookLogger
 {
     /// <inheritdoc />
-    void ILogger.Log<T>(LogType logType, T message)
+    void IBookLogger.Log<T>(LogType logType, T message)
     {
         switch (logType)
         {
@@ -22,7 +22,7 @@ public sealed class Logger : ILogger
     }
     
     /// <inheritdoc />
-    void ILogger.WriteToLogFile<T>(LogType logType, T message)
+    void IBookLogger.WriteToLogFile<T>(LogType logType, T message)
     {
         string logDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs");
         string logFileName = $"{logType}_{DateTime.Now:yyyy-MM-dd}.txt";
@@ -32,7 +32,7 @@ public sealed class Logger : ILogger
 
         using (StreamWriter writer = new StreamWriter(logFilePath, true))
         {
-            writer.WriteLine($"{DateTime.Now:HH:mm:ss} [{logType}] {message}");
+            writer.WriteLine($"[{logType}] - {DateTime.Now:HH:mm:ss} {message}");
         }
     }
 }
