@@ -23,4 +23,11 @@
         </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Boundaries\" />
+      <Folder Include="Controllers\" />
+      <Folder Include="Entities\" />
+      <Folder Include="Services\" />
+    </ItemGroup>
+
 </Project>
