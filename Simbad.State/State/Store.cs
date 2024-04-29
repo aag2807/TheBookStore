@@ -17,17 +17,16 @@ public sealed class Store : IStore
 
     private void RegisterStates()
     {
-        // Discover all state types decorated with the StateAttribute
-        var stateTypes = Assembly.GetExecutingAssembly().GetTypes()
-            .Where(t => t.GetCustomAttributes(typeof(StateAttribute), false).Any());
+        var stateTypes = AppDomain.CurrentDomain.GetAssemblies()
+            .SelectMany(assembly => assembly.GetTypes())
+            .Where(t => t.GetCustomAttributes(typeof(Simbad.State.Attributes.StateAttribute), false).Any())
+            .ToList();
 
         foreach (var type in stateTypes)
         {
-            // Create an instance of each state class
             var stateInstance = Activator.CreateInstance(type);
             _states[type] = stateInstance;
 
-            // Register action handlers
             var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static)
                 .Where(m => m.GetCustomAttributes(typeof(ActionAttribute), false).Any());
 
@@ -42,13 +41,20 @@ public sealed class Store : IStore
         }
     }
 
-    public void Dispatch(StateAction action, object payload)
+    public void Dispatch(IStateAction action, object? payload = null)
     {
-        var actionName = action.Type;
+        string actionName = action.Type;
         
         if (_actionHandlers.TryGetValue(actionName, out var handler))
         {
-            handler.Method.Invoke(handler.Instance, new[] { payload });
+            if (payload is null)
+            {
+                handler.Method.Invoke(handler.Instance, null);                
+            }
+            else
+            {
+                handler.Method.Invoke(handler.Instance, new[] { payload });
+            }
         }
     }
 
@@ -56,21 +62,5 @@ public sealed class Store : IStore
     {
         _states.TryGetValue(typeof(T), out var state);
         return state as T;
-    }
-
-    public void InjectStateSnapshots(object target)
-    {
-        var properties = target.GetType().GetProperties()
-            .Where(prop => Attribute.IsDefined(prop, typeof(SelectSnapshotAttribute)));
-
-        foreach (var property in properties)
-        {
-            var attribute = property.GetCustomAttribute<SelectSnapshotAttribute>();
-            if (_states.TryGetValue(attribute.StateType, out var stateInstance) &&
-                property.PropertyType.IsAssignableFrom(attribute.StateType))
-            {
-                property.SetValue(target, stateInstance);
-            }
-        }
     }
 }
