@@ -30,17 +30,14 @@ public sealed class UserRepositoryFacts : BaseDatabaseTestingUnit
     [Fact]
     public async Task GetUserByUsernameAndPassword_WithValidCredentialsReturnsUser()
     {
-        User newUser = new User()
+        await CreateUser("admin", "admin").ConfigureAwait(true);
+        User userLoggingIn = new User()
         {
             Username = "admin",
-            Password = "admin",
-            Email = "admin@email.com",
-            IsAdmin = true,
-            IsBlocked = false,
+            Password = "admin"
         };
-        await UserRepository.AddUser(newUser).ConfigureAwait(true);
 
-        User result = await UserRepository.GetUserByUsernameAndPassword(newUser).ConfigureAwait(true);
+        User result = await UserRepository.GetUserByUsernameAndPassword(userLoggingIn).ConfigureAwait(true);
 
         Assert.NotNull(result);
         Assert.Equal("admin", result.Username);

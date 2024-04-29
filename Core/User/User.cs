@@ -2,6 +2,19 @@ namespace Core.User;
 
 public sealed class User
 {
+    public User()
+    {
+    }
+
+    public User(string username, string password, string email, bool isAdmin, bool isBlocked)
+    {
+        Username = username;
+        Password = password;
+        Email = email;
+        IsAdmin = isAdmin;
+        IsBlocked = isBlocked;
+    }
+
     public int UserId { get; set; }
     
     public string Username { get; set; } = String.Empty;
