@@ -6,6 +6,7 @@ using Boundaries.Persistance.Models.Order;
 using Boundaries.Persistance.Models.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Triplex.Validations;
 
 namespace Boundaries.Persistance.Context;
@@ -36,8 +37,41 @@ public class BookDbContext : DbContext, IBookDbContext
 
         modelBuilder.Entity<BookCategory>()
             .HasKey(bc => new { bc.BookId, bc.CategoryId });
+        
+        SeedData(modelBuilder);
 
         base.OnModelCreating(modelBuilder);
+    }
+
+    private void SeedData(ModelBuilder builder)
+    {
+        builder.Entity<User>()
+            .HasData(
+                new User
+                {
+                    UserId = 1,
+                    Username = "admin",
+                    Password = "admin",
+                    Email = "admin@email.com",
+                    IsAdmin = true,
+                    IsBlocked = false,
+                    IsDeleted = false,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                },
+                new User()
+                {
+                    UserId = 2,
+                    Username = "user",
+                    Password = "user",
+                    Email = "user@email.com",
+                    IsAdmin = false,
+                    IsBlocked = false,
+                    IsDeleted = false,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                }
+            );
     }
 
     /// <inheritdoc/>
@@ -66,4 +100,9 @@ public class BookDbContext : DbContext, IBookDbContext
 
     /// <inheritdoc/>
     DbSet<User> IBookDbContext.User { get; set; }
+
+    public Task<int> SaveChangesAsync()
+    {
+        return base.SaveChangesAsync();
+    }
 }

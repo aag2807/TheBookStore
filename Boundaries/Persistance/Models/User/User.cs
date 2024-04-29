@@ -48,4 +48,12 @@ public sealed class User
         
         return coreEntity;
     }
+    
+    public static User FromCoreEntity(Core.User.User coreEntity)
+    {
+        User dbEntity = new User();
+        ObjectUtils.Assign(dbEntity, coreEntity);
+        
+        return dbEntity;
+    }
 }

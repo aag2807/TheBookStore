@@ -5,6 +5,7 @@ using Boundaries.Persistance.Models.Customer;
 using Boundaries.Persistance.Models.Order;
 using Boundaries.Persistance.Models.User;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Boundaries.Persistance.Context;
 
@@ -58,4 +59,16 @@ public interface IBookDbContext
     /// Represents the entity <see cref="User"/> on the DataBase
     /// </summary>
     public DbSet<User> User { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public Task<int> SaveChangesAsync();
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public int SaveChanges();
 }
