@@ -9,8 +9,8 @@
         <ul class="max-h-full overflow-y-auto gap-3 flex flex-col">
             @foreach (TodoItem todo in Todos)
             {
-                <li @ondblclick="() => toggleStatus(todo)" class="text-[#d8d9f3] bg-[#2f2d36] p-4 rounded flex cursor-pointer transition hover:opacity-75">
-                    <div class="relative status-circle transition @(todo.IsComplete ? "after:bg-[#717085]" : "") min-w-[24px] min-h-[24px] rounded-full border border-1 border-[#717085] mr-3 after:rounded-full after:absolute after:top-[50%] after:left-[50%] after:translate-x-[-50%] after:translate-y-[-50%] after:transition after:h-[15px] after:w-[15px]"/>
+                <li @ondblclick="() => toggleStatus(todo)" class="text-[#d8d9f3] bg-[#2f2d36] p-4 rounded flex cursor-pointer transition hover:opacity-75 border border-1 border-transparent transition @(todo.IsComplete ? " border-[#815ff3]" : "")">
+                    <div @onclick="()=> toggleStatus(todo)" class="relative status-circle transition @(todo.IsComplete ? "after:bg-[#717085]" : "") min-w-[24px] min-h-[24px] rounded-full border border-1 border-[#717085] mr-3 after:rounded-full after:absolute after:top-[50%] after:left-[50%] after:translate-x-[-50%] after:translate-y-[-50%] after:transition after:h-[15px] after:w-[15px]"/>
                     <span class="flex items-center @(todo.IsComplete ? "line-through" : "")	">
                         @todo.Text
                     </span>
