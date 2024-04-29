@@ -1,0 +1,56 @@
+@page "/"
+
+@inject IStore Store;
+
+<h3 class="text-[#dfe1fc] text-[45px] mb-5">To<span class="text-[#815ff3]">do</span></h3>
+<div class="flex flex-row gap-10">
+
+    <div class="flex flex-col min-w-[300px] min-h-[500px] max-h-[500px] bg-[#18181c] rounded-lg p-5">
+        <ul class="max-h-full overflow-y-auto gap-3 flex flex-col">
+            @foreach (TodoItem todo in Todos)
+            {
+                <li @ondblclick="() => toggleStatus(todo)" class="text-[#d8d9f3] bg-[#2f2d36] p-4 rounded flex cursor-pointer transition hover:opacity-75">
+                    <div class="relative status-circle transition @(todo.IsComplete ? "after:bg-[#717085]" : "") min-w-[25px] min-h-[25px] rounded-full border border-1 border-[#717085] mr-3 after:rounded-full after:absolute after:top-[50%] after:left-[50%] after:translate-x-[-50%] after:translate-y-[-50%] after:transition after:h-[15px] after:w-[15px]"/>
+                    <span class="flex items-center @(todo.IsComplete ? "line-through" : "")	">
+                        @todo.Text
+                    </span>
+                    <button class="ms-auto cursor-pointer select-none" @onclick="() => RemoveTodo(todo)">&times;</button>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div class="flex flex-col  bg-[#18181c] min-w-[500px] min-h-[500px] rounded-lg p-5">
+        <div class="flex flex-row gap-4">
+            <input @bind-value="NewTodoText" class="text-[#d8d9f3] bg-[#2f2d36] rounded w-full p-4 focus:outline-0"/>
+            <button class="text-[#8f93d7] text-[#815ff3] w-[100px] hover:opacity-75" @onclick="AddTodo">Add Todo</button>
+        </div>
+    </div>
+
+</div>
+
+
+@code {
+    private string NewTodoText { get; set; } = string.Empty;
+
+    private List<TodoItem> Todos => Store.GetState<TodoListState>().Items;
+
+    private void AddTodo()
+    {
+        Store.Dispatch(new AddTodo(), NewTodoText);
+        NewTodoText = string.Empty;
+    }
+
+    private void RemoveTodo(TodoItem todo)
+    {
+        int index = Todos.IndexOf(todo);
+        Store.Dispatch(new RemoveTodo(), index);
+    }
+
+    private void toggleStatus(TodoItem todo)
+    {
+        int index = Todos.IndexOf(todo);
+        Store.Dispatch(new ToggleTodoStatus(), index);
+    }
+
+}
