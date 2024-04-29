@@ -24,12 +24,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers\" />
       <Folder Include="Entities\" />
-      <Folder Include="Services\" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\BookApi\BookApi.csproj" />
       <ProjectReference Include="..\Boundaries\Boundaries.csproj" />
     </ItemGroup>
 

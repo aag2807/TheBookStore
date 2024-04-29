@@ -15,6 +15,12 @@ public sealed class UserService : IUserService
 
     public async Task CreateUser(User user)
     {
+        Arguments.NotNull(user, nameof(user));
+        Arguments.NotEmptyOrWhiteSpaceOnly(user.Username, nameof(user.Username));
+        Arguments.NotEmptyOrWhiteSpaceOnly(user.Password, nameof(user.Password));
+        Arguments.NotEmptyOrWhiteSpaceOnly(user.Email, nameof(user.Email));
+
+        await _userRepository.AddUser(user).ConfigureAwait(true);
     }
 
     public async Task<User> LoginUser(LoginUser loginUser)
