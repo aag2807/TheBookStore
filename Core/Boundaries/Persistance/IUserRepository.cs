@@ -9,7 +9,15 @@ public interface IUserRepository
      /// <returns>A valid domain entity of <see cref="Core.User.User"/></returns>
      public Task<Core.User.User> GetUserByUsernameAndPassword(Core.User.User user);
      
+     /// <summary>
+     /// Persists an existing user to the database
+     /// </summary>
+     /// <param name="user"> A valid instance of <see cref="Core.User"/></param>
      public Task AddUser(Core.User.User user);
      
+     /// <summary>
+     /// Get's all the existing users from the database
+     /// </summary>
+     /// <returns> A valid collection of <see cref="Core.User.User"/></returns>
      public Task<IEnumerable<Core.User.User>> GetAllUsers();
 }

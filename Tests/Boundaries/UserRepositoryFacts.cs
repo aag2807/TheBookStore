@@ -2,7 +2,7 @@ using Core.User;
 
 namespace Tests.Boundaries;
 
-public sealed class UserRepositoryFacts : BaseDatabaseTestingUnit
+public sealed class UserRepositoryFacts : BaseUnitTest
 {
     public UserRepositoryFacts() : base()
     {
@@ -27,6 +27,28 @@ public sealed class UserRepositoryFacts : BaseDatabaseTestingUnit
         Assert.NotEmpty(users);
     }
 
+    [Fact]
+    public async Task GetAllUsers_WithNoUsersReturnsEmptyList()
+    {
+        IEnumerable<User> users = await UserRepository.GetAllUsers().ConfigureAwait(true);
+
+        Assert.NotNull(users);
+        Assert.Empty(users);
+    }
+    
+    [Fact]
+    public async Task GetAllUsers_WithUsersReturnsListOfUsers()
+    {
+        await CreateUser("admin", "admin").ConfigureAwait(true);
+        await CreateUser("user", "user").ConfigureAwait(true);
+        
+        IEnumerable<User> users = await UserRepository.GetAllUsers().ConfigureAwait(true);
+        
+        Assert.NotNull(users);
+        Assert.NotEmpty(users);
+        Assert.Equal(2, users.Count());
+    }
+    
     [Fact]
     public async Task GetUserByUsernameAndPassword_WithValidCredentialsReturnsUser()
     {

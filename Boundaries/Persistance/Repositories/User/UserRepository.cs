@@ -30,7 +30,8 @@ public sealed class UserRepository : IUserRepository
         return dbUser!.ToCoreEntity();
     }
 
-    public async Task AddUser(Core.User.User user)
+    /// <inheritdoc />
+    async Task IUserRepository.AddUser(Core.User.User user)
     {
         Arguments.NotNull(user, nameof(user));
         
@@ -41,7 +42,8 @@ public sealed class UserRepository : IUserRepository
         await _bookDbContext.SaveChangesAsync().ConfigureAwait(true);
     }
 
-    public async Task<IEnumerable<Core.User.User>> GetAllUsers()
+    /// <inheritdoc />
+    async Task<IEnumerable<Core.User.User>> IUserRepository.GetAllUsers()
     {
         IEnumerable<Core.User.User> users = await _bookDbContext.User
             .Select(dbUser => dbUser.ToCoreEntity())

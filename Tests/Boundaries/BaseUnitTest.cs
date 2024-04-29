@@ -6,14 +6,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Tests.Boundaries;
 
-public class BaseDatabaseTestingUnit : IDisposable
+public class BaseUnitTest : IDisposable
 {
     private BookDbContext _context;
 
     //repositories
     protected IUserRepository UserRepository;
 
-    protected BaseDatabaseTestingUnit()
+    protected BaseUnitTest()
     {
         ConfigureDatabase();
         InstantiateRepositories();
