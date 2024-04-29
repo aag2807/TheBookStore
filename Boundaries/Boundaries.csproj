@@ -12,7 +12,6 @@
       <Folder Include="Persistance\Repositories\Category\" />
       <Folder Include="Persistance\Repositories\Customer\" />
       <Folder Include="Persistance\Repositories\Order\" />
-      <Folder Include="Persistance\Repositories\User\" />
     </ItemGroup>
 
     <ItemGroup>

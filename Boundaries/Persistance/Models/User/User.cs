@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Core.Utils;
 
 namespace Boundaries.Persistance.Models.User;
 
@@ -39,4 +40,12 @@ public sealed class User
     
     [Required]
     public DateTime UpdatedAt { get; set; } = DateTime.Now;
+
+    public Core.User.User ToCoreEntity()
+    {
+        Core.User.User coreEntity = new Core.User.User();
+        ObjectUtils.Assign(coreEntity, this);
+        
+        return coreEntity;
+    }
 }
