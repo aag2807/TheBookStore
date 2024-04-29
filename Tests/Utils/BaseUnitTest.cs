@@ -4,7 +4,7 @@ using Core.Boundaries.Persistance;
 using Core.User;
 using Microsoft.EntityFrameworkCore;
 
-namespace Tests.Boundaries;
+namespace Tests.Utils;
 
 public class BaseUnitTest : IDisposable
 {

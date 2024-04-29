@@ -1,4 +1,5 @@
 using Core.User;
+using Tests.Utils;
 
 namespace Tests.Boundaries;
 

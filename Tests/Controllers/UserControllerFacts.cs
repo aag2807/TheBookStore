@@ -3,6 +3,7 @@ using Core.User.Aggregates;
 using Core.User.Service;
 using Microsoft.AspNetCore.Mvc;
 using Tests.Boundaries;
+using Tests.Utils;
 
 namespace Tests.Controllers;
 

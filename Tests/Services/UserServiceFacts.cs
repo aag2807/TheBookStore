@@ -2,6 +2,7 @@ using Boundaries.Persistance.Models.User;
 using Core.User.Aggregates;
 using Core.User.Service;
 using Tests.Boundaries;
+using Tests.Utils;
 
 namespace Tests.Services;
 
