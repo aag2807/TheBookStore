@@ -5,7 +5,7 @@ using Simbad.State.State;
 
 public sealed class Store : IStore
 {
-    public event Action OnStateChanged;
+    public event Action? OnStateChanged;
 
     private readonly IServiceProvider _serviceProvider;
     private readonly Dictionary<Type, object> _states = new Dictionary<Type, object>();
@@ -29,10 +29,11 @@ public sealed class Store : IStore
             object? stateInstance = Activator.CreateInstance(type);
             _states[type] = stateInstance;
 
-            IEnumerable<MethodInfo> methods = type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static)
+            IEnumerable<MethodInfo> methods = type
+                .GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static)
                 .Where(m => m.GetCustomAttributes(typeof(ActionAttribute), false).Any());
 
-            foreach (var method in methods)
+            foreach (MethodInfo method in methods)
             {
                 ActionAttribute? actionAttribute = method.GetCustomAttribute<ActionAttribute>();
                 if (method.IsStatic || method.DeclaringType.IsInstanceOfType(stateInstance))
