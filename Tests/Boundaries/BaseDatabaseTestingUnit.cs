@@ -8,13 +8,18 @@ namespace Tests.Boundaries;
 
 public class BaseDatabaseTestingUnit : IDisposable
 {
-    private readonly BookDbContext _context;
+    private BookDbContext _context;
 
     //repositories
-    protected readonly IUserRepository UserRepository;
-
+    protected IUserRepository UserRepository;
 
     protected BaseDatabaseTestingUnit()
+    {
+        ConfigureDatabase();
+        InstantiateRepositories();
+    }
+
+    private void ConfigureDatabase()
     {
         DbContextOptions<BookDbContext> options = new DbContextOptionsBuilder<BookDbContext>()
             .UseSqlServer("Data Source=localhost,1433;Initial Catalog=BookStore_test;User Id=sa;Password=yourStrong(!)Password;Encrypt=False;TrustServerCertificate=True;")
@@ -23,7 +28,10 @@ public class BaseDatabaseTestingUnit : IDisposable
         _context = new BookDbContext(options);
         _context.Database.EnsureDeleted();
         _context.Database.Migrate();
-        
+    }
+
+    private void InstantiateRepositories()
+    {
         UserRepository = new UserRepository(_context);
     }
 
