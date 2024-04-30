@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using System.Net;
+using Boundaries.Logger;
 
 namespace BookApi.Extensions;
 
@@ -13,20 +14,26 @@ internal static class ExceptionMiddlewareExtensions
 
     internal static void ConfigureExceptionHandler(this IApplicationBuilder app)
     {
+        IBookLogger bookLogger = new BookLogger();
+
         app.UseExceptionHandler(appError =>
         {
             appError.Run(async context =>
             {
                 context.Response.ContentType = ContentType;
                 var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
-
+                string? ipAddress = context.Connection.RemoteIpAddress?.ToString();
+                string route = context.Request.Path;
+                string method = context.Request.Method;
+                
                 if (contextFeature == null)
                 {
-                    await BuildResponse(context, (int)HttpStatusCode.InternalServerError,
-                        DefaultErrorMessage).ConfigureAwait(false);
+                    bookLogger.WriteToLogFile(LogType.Info, $"[ {ipAddress} ] [ {method} {route}, {DefaultErrorMessage} ] \n\n");
+                    await BuildResponse(context, (int)HttpStatusCode.InternalServerError, DefaultErrorMessage).ConfigureAwait(false);
                     return;
                 }
 
+                bookLogger.WriteToLogFile(LogType.Info, $"[ {ipAddress} ] [ {method} {route}, {DefaultErrorMessage} ] \n\n");
                 await BuildResponse(context, 400, DefaultErrorMessage).ConfigureAwait(false);
             });
         });

@@ -34,4 +34,9 @@ public sealed class UserService : IUserService
 
         return coreUser;
     }
+
+    public async Task<IEnumerable<User>> GetAllUsers()
+    {
+        return await _userRepository.GetAllUsers().ConfigureAwait(true);
+    }
 }

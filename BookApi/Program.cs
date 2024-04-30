@@ -9,6 +9,7 @@ builder.ConfigureCORS();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.ConfigureDi();
 builder.ConfigureDatabase();
 
 var app = builder.Build();

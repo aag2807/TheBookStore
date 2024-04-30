@@ -1,4 +1,3 @@
-using Boundaries.Persistance.Repositories.User;
 using Core.User;
 using Core.User.Aggregates;
 using Core.User.Service;
@@ -19,7 +18,7 @@ public class UserController : ControllerBase
     }
 
     /// <summary>
-    /// 
+    /// logs the user in from a body request and returns the user back if valid to indicate successful login
     /// </summary>
     /// <param name="userLoginData"></param>
     /// <returns></returns>
@@ -31,5 +30,17 @@ public class UserController : ControllerBase
         User user = await _userService.LoginUser(userLoginData).ConfigureAwait(true);
 
         return Ok(user);
+    }
+    
+    /// <summary>
+    /// Gets all users from the database
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("get-all")]
+    public async Task<IActionResult> GetAllUsers()
+    {
+        IEnumerable<User> users = await _userService.GetAllUsers().ConfigureAwait(true);
+
+        return Ok(users);
     }
 }

@@ -16,4 +16,6 @@ public interface IUserService
     /// <param name="loginUser">An aggregate of type <see cref="LoginUser"/></param>
     /// <returns>A valid instance of <see cref="Core.User"/></returns>
     public Task<User> LoginUser(LoginUser loginUser);
+    
+    public Task<IEnumerable<User>> GetAllUsers();
 }
