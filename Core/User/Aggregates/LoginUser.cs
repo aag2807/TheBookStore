@@ -6,9 +6,9 @@ public sealed class LoginUser
 
     public string Password { get; set; } = String.Empty;
     
-    public Core.User.User ToCoreUser()
+    public User ToCoreUser()
     {
-        return new Core.User.User
+        return new User
         {
             Username = Username,
             Password = Password

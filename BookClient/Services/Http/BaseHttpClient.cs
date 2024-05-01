@@ -8,7 +8,7 @@ namespace BookClient.Services.Http;
 /// <summary>
 /// Base class from which all http client services will inherit from
 /// </summary>
-abstract class BaseHttpClient : IBaseHttpClient
+public abstract class BaseHttpClient
 {
     private readonly HttpClient _httpClient;
 
@@ -17,8 +17,7 @@ abstract class BaseHttpClient : IBaseHttpClient
         _httpClient = httpClient;
     }
 
-    /// <inheritdoc />
-    IObservable<T> IBaseHttpClient.GetAsync<T>(string url)
+    protected IObservable<T> GetAsync<T>(string url)
     {
         return Observable.FromAsync(async () =>
         {
@@ -27,18 +26,16 @@ abstract class BaseHttpClient : IBaseHttpClient
         });
     }
 
-    /// <inheritdoc />
-    IObservable<T> IBaseHttpClient.PostAsync<T>(string url, T content)
+    protected IObservable<K> PostAsync<T, K>(string url, T content)
     {
         return Observable.FromAsync(async () =>
         {
             var response = await _httpClient.PostAsJsonAsync(url, content).ConfigureAwait(false);
-            return await ProcessHttpClientResponse<T>(response);
+            return await ProcessHttpClientResponse<K>(response);
         });
     }
 
-    /// <inheritdoc />
-    IObservable<T> IBaseHttpClient.PutAsync<T>(string url, T content)
+    protected IObservable<T> PutAsync<T>(string url, T content)
     {
         return Observable.FromAsync(async () =>
         {
@@ -47,8 +44,7 @@ abstract class BaseHttpClient : IBaseHttpClient
         });
     }
 
-    /// <inheritdoc />
-    IObservable<T> IBaseHttpClient.PatchAsync<T>(string url, HttpContent content)
+    protected IObservable<T> PatchAsync<T>(string url, HttpContent content)
     {
         return Observable.FromAsync(async () =>
         {
@@ -58,8 +54,7 @@ abstract class BaseHttpClient : IBaseHttpClient
         });
     }
 
-    /// <inheritdoc />
-    IObservable<Unit> IBaseHttpClient.DeleteAsync(string url)
+    protected IObservable<Unit> DeleteAsync(string url)
     {
         return Observable.FromAsync(async () =>
         {
