@@ -44,31 +44,29 @@ public sealed class Store : IStore
         }
     }
 
-    void IStore.Dispatch(IStateAction action, object? payload = null)
+    /// <inheritdoc />
+    void IStore.Dispatch(IStateAction action, params object[]? payload)
     {
         string actionName = action.Type;
 
         if (_actionHandlers.TryGetValue(actionName, out var handler))
         {
-            if (payload is null)
-            {
-                handler.Method.Invoke(handler.Instance, null);
-            }
-            else
-            {
-                handler.Method.Invoke(handler.Instance, new[] { payload });
-            }
+            object[]? parameters = payload?.Length > 0 ? payload : null;
+            handler.Method.Invoke(handler.Instance, parameters);
 
             OnStateChanged?.Invoke();
         }
     }
 
+
+    /// <inheritdoc />
     T IStore.GetState<T>() where T : class
     {
         _states.TryGetValue(typeof(T), out var state);
         return state as T;
     }
 
+    /// <inheritdoc />
     void IStore.ResetState<T>() where T : class
     {
         if (_states.TryGetValue(typeof(T), out var state))

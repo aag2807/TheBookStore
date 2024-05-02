@@ -1,4 +1,6 @@
+@using BookClient.Services.State.Layout.actions
 @inject NavigationManager NavigationManager
+@inject IStore Store;
 
 <aside data-role="navigation-bar" class="bg-[#eee5da] flex flex-col min-h-screen min-w-[120px] justify-center">
     <!-- AVATAR ICON -->
@@ -24,7 +26,7 @@
     </div>
 
     <!-- NOTIFICATION BELL -->
-    <div class="bg-[#567695] w-[90px] min-h-[250px] mx-auto mt-auto mb-[30px] rounded-full flex flex-col transition hover:scale-[0.95] cursor-pointer">
+    <div @onclick="OpenSubscriptionModal" class="bg-[#567695] w-[90px] min-h-[250px] mx-auto mt-auto mb-[30px] rounded-full flex flex-col transition hover:scale-[0.95] cursor-pointer">
         <div class="w-[70px] h-[70px] rounded-full bg-[#314f6a] mx-auto mb-auto mt-3 flex items-center justify-center">
             <img class="w-[35px] h-[35px]" src="/assets/bell-icon.svg" alt="">
         </div>
@@ -41,5 +43,11 @@
     private void NavigateTo(string route)
     {
         NavigationManager.NavigateTo(route);
+    }
+
+    private void OpenSubscriptionModal()
+    {
+        Dictionary<string, object> emptyArgs = new Dictionary<string, object>();
+        Store.Dispatch(new OpenModal(), typeof(SubscriptionForm), emptyArgs);
     }
 }

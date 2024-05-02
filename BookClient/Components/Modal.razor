@@ -1,0 +1,28 @@
+@using BookClient.Services.State.Layout
+@using BookClient.Services.State.Layout.actions
+@inherits  StoreConnectedComponent
+
+@if (IsModalOpen)
+{
+    // remember to animate backdrop with fade in and fade out
+    <section data-role="backdrop" class="absolute z-[9999999999999] bg-black opacity-[0.8] w-screen h-screen flex flex-col items-center justify-center">
+        <div class="flex flex-col bg-white min-w-[500px] min-h-[500px] rounded-[26px] px-5 py-4">
+            <header class="flex flex-row w-full ">
+                <button class="ms-auto transition text-[20px] hover:opacity-75" @onclick="CloseModal">&times;</button>
+            </header>
+
+            <DynamicComponent Type="DynamicComponent" Parameters="Arguments"/>
+        </div>
+    </section>
+}
+
+@code {
+    private bool IsModalOpen => Store.GetState<LayoutState>().IsModalOpen;
+    private Type DynamicComponent => Store.GetState<LayoutState>().ModalComponentType!;
+    private Dictionary<string, object> Arguments => Store.GetState<LayoutState>().ModalComponentArgs!;
+
+    private void CloseModal()
+    {
+        Store.Dispatch(new CloseModal());
+    }
+}

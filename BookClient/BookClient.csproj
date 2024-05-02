@@ -22,8 +22,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Components\" />
       <Folder Include="Pages\Modules\" />
+      <Folder Include="Services\State\" />
     </ItemGroup>
 
     <ItemGroup>

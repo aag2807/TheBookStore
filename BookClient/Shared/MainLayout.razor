@@ -1,10 +1,14 @@
 ﻿@inherits LayoutComponentBase
 
-<main class="min-h-screen min-w-screen flex">
+<main class="min-h-screen min-w-screen flex relative">
     <NavigationColumn/>
     <section class="mx-auto">
         @Body
     </section>
     <ChatColumn/>
+    <Modal/>
 </main>
 
+@code {
+
+}

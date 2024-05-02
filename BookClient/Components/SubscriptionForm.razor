@@ -1,0 +1,13 @@
+@using Core.User.Aggregates
+
+<EditForm Model="SubscribeUser">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <InputText @bind-Value="SubscribeUser.Name" />
+    <InputText @bind-Value="SubscribeUser.Email" />
+    <button type="submit">Submit</button>
+</EditForm>
+
+@code {
+    private SubscribeUser SubscribeUser { get; set; }= new();
+}
