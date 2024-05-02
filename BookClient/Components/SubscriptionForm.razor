@@ -1,13 +1,47 @@
+@using System.Reflection
+@using BookClient.Services.Notification
 @using Core.User.Aggregates
+@inject IStore Store;
+@inject INotificationService NotificationService;
 
-<EditForm Model="SubscribeUser">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-    <InputText @bind-Value="SubscribeUser.Name" />
-    <InputText @bind-Value="SubscribeUser.Email" />
-    <button type="submit">Submit</button>
-</EditForm>
+<div class="flex flex-row gap-3">
+    <div class="h-full w-[200px] items-center justify-center">
+        <img src="/assets/book-person.svg" class="w-[150px] h-[150px]" alt="">
+    </div>
+    <EditForm Model="SubscribeUser" class="gap-5 mb-2 flex flex-col h-full w-full" OnSubmit="HandleSubmission">
+        <DataAnnotationsValidator/>
+        <ValidationSummary/>
+
+        <!-- User name -->
+        <div class="flex flex-col relative">
+            <img src="/assets/user-icon.svg" class="w-[25px] h-[20px] absolute bottom-[0px] translate-y-[-50%] left-[5px]" alt="">
+            <label>What do we call you?</label>
+            <InputText @bind-Value="SubscribeUser.Name" class=" @InputClasses"/>
+        </div>
+
+        <!-- User email -->
+        <div class="flex flex-col relative">
+            <img src="/assets/email-icon.svg" class="w-[25px] h-[20px] absolute bottom-[0px] translate-y-[-50%] left-[5px]" alt="">
+            <label>Where can we reach you?</label>
+            <InputText @bind-Value="SubscribeUser.Email" class=" @InputClasses"/>
+        </div>
+
+        <button type="submit" class="ms-auto transition hover:opacity-75 py-2 px-8 rounded-full border border-1 border-[#ebe4da] bg-[#f7efe5] rounded-full w-[fit-content]">
+            Subscribe
+        </button>
+    </EditForm>
+</div>
 
 @code {
-    private SubscribeUser SubscribeUser { get; set; }= new();
+    private const string InputClasses = "focus:outline-1 focus:outline-[#314f6a] outline-0 indent-8 border border-1 border-[#ebe4da] bg-[#f7efe5] rounded-full h-[40px]";
+    private SubscribeUser SubscribeUser { get; } = new();
+
+    private async Task HandleSubmission()
+    {
+        if (string.IsNullOrWhiteSpace(SubscribeUser.Email))
+        {
+            await NotificationService.NotifyAsync("Email is required").ConfigureAwait(true);
+        }
+    }
+
 }
