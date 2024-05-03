@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using Core.Utils;
 
 namespace Boundaries.Persistance.Models.User;
@@ -40,6 +41,15 @@ public sealed class User
     
     [Required]
     public DateTime UpdatedAt { get; set; } = DateTime.Now;
+
+    [Required] 
+    public bool IsSubscribedToNewsLetter { get; set; } = false;
+    
+    [AllowNull]
+    public DateTime? SubscriptionDate { get; set; } = null;
+    
+    [AllowNull]
+    public DateTime? UnsubscriptionDate { get; set; } = null;
 
     public Core.User.User ToCoreEntity()
     {

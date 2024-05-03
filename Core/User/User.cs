@@ -26,4 +26,6 @@ public sealed class User
     public bool IsAdmin { get; set; } = false;
     
     public bool IsBlocked { get; set; } = false;
+    
+    public bool IsSubscribedToNewsLetter { get; set; } = false;
 }

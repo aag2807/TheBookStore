@@ -1,36 +1,38 @@
+@using BookClient.Services.State.Authentication
+@using BookClient.Services.State.Layout
 @using BookClient.Services.State.Layout.actions
 @inject NavigationManager NavigationManager
-@inject IStore Store;
+@inherits StoreConnectedComponent
 
 <aside data-role="navigation-bar" class="bg-[#eee5da] flex flex-col min-h-screen min-w-[120px] justify-center">
     <!-- AVATAR ICON -->
-    <div data-role="logged-in-avatar" class=" w-[80px] h-[80px] bg-white rounded-full mb-auto mx-auto mt-[30px]"></div>
+    <div data-role="logged-in-avatar" class=" @(IsUserLoggedIn ? "" : "pointer-events-none invisible ") w-[80px] h-[80px] bg-white rounded-full mb-auto mx-auto mt-[30px]"></div>
 
     <!-- NAVIGATION LINKS -->
     <div class="flex flex-col my-auto gap-5">
-        <div data-role="home-link" class="w-[80px] h-[80px] bg-[#faf2e9] rounded-full mx-auto flex items-center justify-center cursor-pointer hover:scale-[0.9] transition">
+        <div @onclick="() => NavigateTo(Routes.Home)" data-role="home-link" class="w-[80px] h-[80px] bg-[#faf2e9] rounded-full mx-auto flex items-center justify-center cursor-pointer hover:scale-[0.9] transition">
             <img class="w-[28px] h-[28px]" src="/assets/menu-icon.svg" alt="">
         </div>
 
-        <div data-role="favorites-link" class="w-[80px] h-[80px] bg-[#faf2e9] rounded-full mx-auto flex items-center justify-center cursor-pointer hover:scale-[0.9] transition">
+        <div @onclick="() => NavigateTo(Routes.Favorites)" data-role="favorites-link" class="w-[80px] h-[80px] bg-[#faf2e9] rounded-full mx-auto flex items-center justify-center cursor-pointer hover:scale-[0.9] transition">
             <img class="w-[35px] h-[35px]" src="/assets/star-icon.svg" alt="">
         </div>
 
-        <div data-role="audiobooks-link" class="w-[80px] h-[80px] bg-[#faf2e9] rounded-full mx-auto flex items-center justify-center cursor-pointer hover:scale-[0.9] transition">
+        <div @onclick="() => NavigateTo(Routes.Audio)" data-role="audiobooks-link" class="w-[80px] h-[80px] bg-[#faf2e9] rounded-full mx-auto flex items-center justify-center cursor-pointer hover:scale-[0.9] transition">
             <img class="w-[35px] h-[35px] translate-x-[5px]" src="/assets/play-icon.svg" alt="">
         </div>
 
-        <div data-role="book-movies-link" class="w-[80px] h-[80px] bg-[#faf2e9] rounded-full mx-auto flex items-center justify-center cursor-pointer hover:scale-[0.9] transition">
+        <div @onclick="() => NavigateTo(Routes.Movies)" data-role="book-movies-link" class="w-[80px] h-[80px] bg-[#faf2e9] rounded-full mx-auto flex items-center justify-center cursor-pointer hover:scale-[0.9] transition">
             <img class="w-[35px] h-[35px]" src="/assets/ticket-icon.svg" alt="">
         </div>
     </div>
 
     <!-- NOTIFICATION BELL -->
-    <div @onclick="OpenSubscriptionModal" class="bg-[#567695] w-[90px] min-h-[250px] mx-auto mt-auto mb-[30px] rounded-full flex flex-col transition hover:scale-[0.95] cursor-pointer">
+    <div @onclick="OpenSubscriptionModal" class="@(IsUserSubscribed ? "pointer-events-none invisible" : "") bg-[#567695] w-[90px] min-h-[250px] mx-auto mt-auto mb-[30px] rounded-full flex flex-col transition hover:scale-[0.95] cursor-pointer">
         <div class="w-[70px] h-[70px] rounded-full bg-[#314f6a] mx-auto mb-auto mt-3 flex items-center justify-center">
             <img class="w-[35px] h-[35px]" src="/assets/bell-icon.svg" alt="">
         </div>
-        
+
         <div class="relative flex items-center justify-center h-[165px]">
             <p class="text-[#fcf1e1] rotate-[-90deg] translate-x-[65px] text-[24px] h-full">
                 subscribe
@@ -40,6 +42,10 @@
 </aside>
 
 @code{
+    private bool IsUserSubscribed => Store.GetState<Authentication>().UserHasSubscription;
+    private bool IsUserLoggedIn => Store.GetState<Authentication>().IsUserLoggedIn;
+    private bool IsModalOpen => Store.GetState<LayoutState>().IsModalOpen;
+
     private void NavigateTo(string route)
     {
         NavigationManager.NavigateTo(route);
@@ -50,4 +56,5 @@
         Dictionary<string, object> emptyArgs = new Dictionary<string, object>();
         Store.Dispatch(new OpenModal(), typeof(SubscriptionForm), emptyArgs);
     }
+
 }

@@ -1,4 +1,3 @@
-using System.Reactive.Linq;
 using BookClient.Services.Http;
 using Core.User.Aggregates;
 

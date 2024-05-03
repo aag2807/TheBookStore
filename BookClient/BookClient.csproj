@@ -22,11 +22,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Pages\Modules\" />
-      <Folder Include="Services\State\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <_ContentIncludedByDefault Remove="wwwroot\sample-data\weather.json" />
     </ItemGroup>
 

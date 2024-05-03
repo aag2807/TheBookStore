@@ -13,7 +13,8 @@ public sealed class UserService : IUserService
         _userRepository = userRepository;
     }
 
-    public async Task CreateUser(User user)
+    /// <inheritdoc />
+    async Task IUserService.CreateUser(User user)
     {
         Arguments.NotNull(user, nameof(user));
         Arguments.NotEmptyOrWhiteSpaceOnly(user.Username, nameof(user.Username));
@@ -23,7 +24,8 @@ public sealed class UserService : IUserService
         await _userRepository.AddUser(user).ConfigureAwait(true);
     }
 
-    public async Task<User> LoginUser(LoginUser loginUser)
+    /// <inheritdoc />
+    async Task<User> IUserService.LoginUser(LoginUser loginUser)
     {
         Arguments.NotNull(loginUser, nameof(loginUser));
         Arguments.NotEmptyOrWhiteSpaceOnly(loginUser.Username, nameof(loginUser.Username));
@@ -35,7 +37,8 @@ public sealed class UserService : IUserService
         return coreUser;
     }
 
-    public async Task<IEnumerable<User>> GetAllUsers()
+    /// <inheritdoc />
+    async Task<IEnumerable<User>> IUserService.GetAllUsers()
     {
         return await _userRepository.GetAllUsers().ConfigureAwait(true);
     }

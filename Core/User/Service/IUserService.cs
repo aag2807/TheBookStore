@@ -17,5 +17,9 @@ public interface IUserService
     /// <returns>A valid instance of <see cref="Core.User"/></returns>
     public Task<User> LoginUser(LoginUser loginUser);
     
+    /// <summary>
+    /// Get's all the users without pagination or anything.
+    /// </summary>
+    /// <returns>A valid collection of <see cref="User"/></returns>
     public Task<IEnumerable<User>> GetAllUsers();
 }

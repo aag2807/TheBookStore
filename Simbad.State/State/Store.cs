@@ -45,16 +45,28 @@ public sealed class Store : IStore
     }
 
     /// <inheritdoc />
-    void IStore.Dispatch(IStateAction action, params object[]? payload)
+    async void IStore.Dispatch(IStateAction action, params object[]? payload)
     {
         string actionName = action.Type;
 
         if (_actionHandlers.TryGetValue(actionName, out var handler))
         {
             object[]? parameters = payload?.Length > 0 ? payload : null;
-            handler.Method.Invoke(handler.Instance, parameters);
 
-            OnStateChanged?.Invoke();
+            Type methodReturnType = handler.Method.ReturnType;
+            bool isAsync = typeof(Task).IsAssignableFrom(methodReturnType);
+
+            if (isAsync)
+            {
+                Task task = (Task)handler.Method.Invoke(handler.Instance, parameters)!;
+                await task.ConfigureAwait(true);
+                OnStateChanged?.Invoke();
+            }
+            else
+            {
+                handler.Method.Invoke(handler.Instance, parameters);
+                OnStateChanged?.Invoke();
+            }
         }
     }
 
