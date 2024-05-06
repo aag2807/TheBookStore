@@ -23,4 +23,8 @@ public sealed class Category
     
     [Required]
     public DateTime UpdatedAt { get; set; } = DateTime.Now;
+    
+    public HashSet<Author.Author> Authors { get; set; } = new();
+    
+    public HashSet<Book.Book> Books { get; set; } = new();
 }

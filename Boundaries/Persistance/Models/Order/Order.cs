@@ -13,18 +13,19 @@ public sealed class Order
     [ForeignKey("Customer")]
     public int CustomerId { get; set; }
 
+    [Required]
     public DateTime OrderDate { get; set; }
 
     [Column(TypeName = "decimal(10, 2)")]
     public decimal TotalPrice { get; set; }
-
-    public Customer.Customer? Customer { get; set; }
-    
-    public ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
     
     [Required]
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     
     [Required]
     public DateTime UpdatedAt { get; set; } = DateTime.Now;
+    
+    public Customer.Customer? Customer { get; set; }
+    
+    public ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 }

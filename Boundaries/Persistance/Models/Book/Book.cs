@@ -21,7 +21,7 @@ public sealed class Book
     public string ISBN { get; set; } = String.Empty;
 
     [Required] 
-    public float price { get; set; } = 0.00f;
+    public float Price { get; set; } = 0.00f;
 
     [Required] 
     public int StockQuantity { get; set; } = 0;
@@ -31,4 +31,6 @@ public sealed class Book
     
     [Required]
     public DateTime UpdatedAt { get; set; } = DateTime.Now;
+    
+    public Author.Author Author { get; set; } = new();
 }

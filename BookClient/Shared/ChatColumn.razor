@@ -1,3 +1,8 @@
+@using BookClient.Models.Messaging
+@using BookClient.Services.State.Authentication
+@using Core.User
+@inherits StoreConnectedComponent
+
 <aside data-role="chat-column" class="bg-[#eee5da] flex flex-col min-h-screen min-w-[400px] px-2">
     <div class="flex w-full py-5 px-4">
         <h4 class="text-[#7d645b] text-[30px]">
@@ -34,7 +39,7 @@
                 <img src="/assets/paperclip.svg"  class="w-[30px] h-[30px]" alt="">
             </div>
             
-            <InputText  @bind-Value="Message" type="text" placeholder="Write a message..." class="w-full h-[60px] rounded-full bg-[#fbf8f5] placeholder-[#64463f] text-[#64463f] px-5 focus:outline-0 "/>
+            <InputText  @bind-Value="MessageContent" type="text" placeholder="Write a message..." class="w-full h-[60px] rounded-full bg-[#fbf8f5] placeholder-[#64463f] text-[#64463f] px-5 focus:outline-0 "/>
             
             <div class="min-w-[60px] h-[60px] flex items-center justify-center bg-[#e76065] rounded-full cursor-pointer transition hover:scale-[0.95]">
                 <img src="/assets/plane-send.svg" class="w-[30px] h-[30px]" alt="">
@@ -44,6 +49,31 @@
 </aside>
 
 @code {
-    private string Message { get; set; } = string.Empty;
+    private IEnumerable<Message> Messages { get; set; } = new List<Message>();
+    private string MessageContent { get; set; } = string.Empty;
+    
+    public Task SendMessage()
+    {
+        if (string.IsNullOrWhiteSpace(MessageContent))
+        {
+            return Task.CompletedTask;
+        }
 
+        if (Store.GetState<Authentication>().IsUserLoggedIn)
+        {
+            User user = Store.GetState<Authentication>().LoggedInUser!;
+
+            Message message = Message.FromLoggedInUser(user, MessageContent);
+            
+            Messages = Messages.Append(message);
+        }
+        else
+        {
+            Message message = Message.FromNoLoggedInUser(MessageContent);
+            Messages = Messages.Append(message);
+        }
+        
+        MessageContent = string.Empty;
+        return Task.CompletedTask;
+    }
 }

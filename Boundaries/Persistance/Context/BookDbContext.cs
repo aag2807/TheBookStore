@@ -1,6 +1,7 @@
 using Boundaries.Persistance.Models.Author;
 using Boundaries.Persistance.Models.Book;
 using Boundaries.Persistance.Models.Category;
+using Boundaries.Persistance.Models.Configurations;
 using Boundaries.Persistance.Models.Customer;
 using Boundaries.Persistance.Models.Order;
 using Boundaries.Persistance.Models.User;
@@ -20,7 +21,7 @@ public class BookDbContext : DbContext, IBookDbContext
     public BookDbContext(DbContextOptions<BookDbContext> options) : base(options)
     {
     }
-    
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         Arguments.NotNull(optionsBuilder, nameof(optionsBuilder));
@@ -32,47 +33,15 @@ public class BookDbContext : DbContext, IBookDbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         Arguments.NotNull(modelBuilder, nameof(modelBuilder));
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
 
         modelBuilder.Entity<BookAuthor>()
             .HasKey(ba => new { ba.BookId, ba.AuthorId });
 
         modelBuilder.Entity<BookCategory>()
             .HasKey(bc => new { bc.BookId, bc.CategoryId });
-        
-        SeedData(modelBuilder);
 
         base.OnModelCreating(modelBuilder);
-    }
-
-    private void SeedData(ModelBuilder builder)
-    {
-        builder.Entity<User>()
-            .HasData(
-                new User
-                {
-                    UserId = 1,
-                    Username = "admin",
-                    Password = "admin",
-                    Email = "admin@email.com",
-                    IsAdmin = true,
-                    IsBlocked = false,
-                    IsDeleted = false,
-                    CreatedAt = DateTime.Now,
-                    UpdatedAt = DateTime.Now
-                },
-                new User()
-                {
-                    UserId = 2,
-                    Username = "user",
-                    Password = "user",
-                    Email = "user@email.com",
-                    IsAdmin = false,
-                    IsBlocked = false,
-                    IsDeleted = false,
-                    CreatedAt = DateTime.Now,
-                    UpdatedAt = DateTime.Now
-                }
-            );
     }
 
     /// <inheritdoc/>
@@ -101,7 +70,7 @@ public class BookDbContext : DbContext, IBookDbContext
 
     /// <inheritdoc/>
     DbSet<User> IBookDbContext.User { get; set; }
- 
+
     /// <inheritdoc cref="IBookDbContext.SaveChanges()"/>
     int IBookDbContext.SaveChanges() => SaveChanges();
 
@@ -113,7 +82,7 @@ public class BookDbContext : DbContext, IBookDbContext
 
     /// <inheritdoc/>
     void IBookDbContext.RemoveRange(params object[] entities) => RemoveRange(entities);
-    
+
     void IBookDbContext.AddRange<TEntity>(IEnumerable<TEntity> entities) => AddRange(entities);
 
     /// <inheritdoc cref="IBookDbContext.AddAsync{TEntity}(TEntity)"/>

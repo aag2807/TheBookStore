@@ -35,4 +35,6 @@ public sealed class Customer
     
     [Required]
     public DateTime UpdatedAt { get; set; } = DateTime.Now;
+    
+    public HashSet<Order.Order> Orders { get; set; } = new();
 }
