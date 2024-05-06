@@ -5,6 +5,7 @@ using Boundaries.Persistance.Models.Customer;
 using Boundaries.Persistance.Models.Order;
 using Boundaries.Persistance.Models.User;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Boundaries.Persistance.Context;
@@ -60,15 +61,20 @@ public interface IBookDbContext
     /// </summary>
     public DbSet<User> User { get; set; }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    public Task<int> SaveChangesAsync();
-    
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    public int SaveChanges();
+    /// <inheritdoc cref="DbContext.SaveChanges()"/>
+    int SaveChanges();
+
+    /// <inheritdoc cref="DbContext.SaveChangesAsync(bool, System.Threading.CancellationToken)"/>
+    Task<int> SaveChangesAsync();
+
+    /// <inheritdoc cref="DbContext.Update{TEntity}(TEntity)"/>
+    EntityEntry Update<TEntity>(TEntity entity);
+
+    /// <inheritdoc cref="DbContext.RemoveRange(object[])"/>
+    void RemoveRange(params object[] entities);
+
+    /// <inheritdoc cref="DbContext.AddAsync{TEntity}(TEntity, System.Threading.CancellationToken)"/>
+    Task<EntityEntry> AddAsync<TEntity>(TEntity entity);
+
+    void AddRange<TEntity>(IEnumerable<TEntity> entities);
 }

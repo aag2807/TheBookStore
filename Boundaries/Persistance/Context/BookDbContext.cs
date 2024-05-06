@@ -5,6 +5,7 @@ using Boundaries.Persistance.Models.Customer;
 using Boundaries.Persistance.Models.Order;
 using Boundaries.Persistance.Models.User;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Triplex.Validations;
@@ -100,9 +101,21 @@ public class BookDbContext : DbContext, IBookDbContext
 
     /// <inheritdoc/>
     DbSet<User> IBookDbContext.User { get; set; }
+ 
+    /// <inheritdoc cref="IBookDbContext.SaveChanges()"/>
+    int IBookDbContext.SaveChanges() => SaveChanges();
 
-    public Task<int> SaveChangesAsync()
-    {
-        return base.SaveChangesAsync();
-    }
+    /// <inheritdoc cref="IBookDbContext.SaveChangesAsync()"/>
+    async Task<int> IBookDbContext.SaveChangesAsync() => await SaveChangesAsync().ConfigureAwait(true);
+
+    /// <inheritdoc/>
+    EntityEntry IBookDbContext.Update<TEntity>(TEntity entity) => Update(entity);
+
+    /// <inheritdoc/>
+    void IBookDbContext.RemoveRange(params object[] entities) => RemoveRange(entities);
+    
+    void IBookDbContext.AddRange<TEntity>(IEnumerable<TEntity> entities) => AddRange(entities);
+
+    /// <inheritdoc cref="IBookDbContext.AddAsync{TEntity}(TEntity)"/>
+    async Task<EntityEntry> IBookDbContext.AddAsync<TEntity>(TEntity entity) => await AddAsync(entity).ConfigureAwait(true);
 }

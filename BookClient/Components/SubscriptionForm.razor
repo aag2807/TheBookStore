@@ -24,6 +24,7 @@
             <img src="/assets/email-icon.svg" class="w-[25px] h-[20px] absolute bottom-[0px] translate-y-[-50%] left-[5px]" alt="">
             <label>Where can we reach you?</label>
             <InputText @bind-Value="SubscribeUser.Email" class=" @InputClasses"/>
+            <ValidationMessage For="() => SubscribeUser.Email"/>
         </div>
 
         <button type="submit" class="ms-auto transition hover:opacity-75 py-2 px-8 rounded-full border border-1 border-[#ebe4da] bg-[#f7efe5] rounded-full w-[fit-content]">
