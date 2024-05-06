@@ -12,7 +12,7 @@
     }
     else
     {
-        <div data-role="log-in-option" class="w-[80px] h-[80px] bg-white rounded-full mb-auto mx-auto mt-[30px] flex items-center justify-center cursor-pointer transition hover:opacity-75 hover:scale-[0.9]">
+        <div @onclick="OpenLoginModal" data-role="log-in-option" class="w-[80px] h-[80px] bg-white rounded-full mb-auto mx-auto mt-[30px] flex items-center justify-center cursor-pointer transition hover:opacity-75 hover:scale-[0.9]">
             <img class="w-[30px] h-[30px]" src="/assets/log-in.svg" alt="">  
         </div>
     }
@@ -66,4 +66,9 @@
         Store.Dispatch(new OpenModal(), typeof(SubscriptionForm), emptyArgs);
     }
 
+    private void OpenLoginModal()
+    {
+        Dictionary<string, object> emptyArgs = new Dictionary<string, object>();
+        Store.Dispatch(new OpenModal(), typeof(LoginForm), emptyArgs);
+    }
 }

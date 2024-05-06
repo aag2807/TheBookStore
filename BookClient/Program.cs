@@ -4,7 +4,6 @@ using BookClient;
 using BookClient.Services.Book;
 using BookClient.Services.Notification;
 using BookClient.Services.User;
-using Microsoft.JSInterop;
 using Simbad.State;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -15,7 +14,6 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddScoped<IBookClient, TestBookClient>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
-
 
 builder.Services.AddStateManagement();
 
