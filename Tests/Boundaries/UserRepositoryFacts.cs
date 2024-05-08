@@ -8,7 +8,6 @@ public sealed class UserRepositoryFacts : BaseUnitTest
 {
     public UserRepositoryFacts() : base()
     {
-        DeleteExistingUsers();
     }
 
     [Fact]

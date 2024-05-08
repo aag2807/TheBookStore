@@ -21,6 +21,8 @@ public class BaseUnitTest : IDisposable
         ConfigureDatabase();
         ConfigureMapper();
         InstantiateRepositories();
+        
+        DeleteExistingDatabaseData();
     }
 
     private void ConfigureDatabase()
@@ -75,8 +77,20 @@ public class BaseUnitTest : IDisposable
     /// <summary>
     /// Clears the existing users in the migration to avoid conflicts
     /// </summary>
-    protected void DeleteExistingUsers()
+    private void DeleteExistingDatabaseData()
     {
-        _context.Database.ExecuteSqlRaw("DELETE FROM [User];");
+        Task.Run( async () =>
+        {
+            await _context.Database.ExecuteSqlRawAsync("DELETE FROM [Author];");
+            await _context.Database.ExecuteSqlRawAsync("DELETE FROM [AuthorCategory];");
+            await _context.Database.ExecuteSqlRawAsync("DELETE FROM [Book];");
+            await _context.Database.ExecuteSqlRawAsync("DELETE FROM [BookAuthor];");
+            await _context.Database.ExecuteSqlRawAsync("DELETE FROM [BookCategory];");
+            await _context.Database.ExecuteSqlRawAsync("DELETE FROM [Category];");
+            await _context.Database.ExecuteSqlRawAsync("DELETE FROM [Customer];");
+            await _context.Database.ExecuteSqlRawAsync("DELETE FROM [Order];");
+            await _context.Database.ExecuteSqlRawAsync("DELETE FROM [OrderDetail];");
+            await _context.Database.ExecuteSqlRawAsync("DELETE FROM [User];");
+        }).ConfigureAwait(true);
     }
 }
