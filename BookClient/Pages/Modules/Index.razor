@@ -1,17 +1,31 @@
 ﻿@page "/"
+@using BookClient.Enums
 
 <PageTitle></PageTitle>
 
 <section >
-  <SearchComponentForCart Placeholder="Search for books" SearchValueChanged="SearchForBook"/>
+    <SearchComponentForCart Placeholder="Search for books" SearchValueChanged="SearchForBook"/>
 </section>
 
+<div class="flex">
+    <div class="flex flex-row gap-4 w-full max-w-full overflow-x-auto">
+        <BookComponent Label="E Books"/>
+        <BookComponent Label="New"/>
+        <BookComponent ColorScheme="BookColorScheme.BestSeller"  Label="Bestsellers"/>
+        <BookComponent ColorScheme="BookColorScheme.Audiobooks" Label="Audiobooks"/>
+        <BookComponent ColorScheme="BookColorScheme.Fiction" Label="Fiction"/>
+        <BookComponent ColorScheme="BookColorScheme.Romance" Label="Romance"/>
+        <BookComponent ColorScheme="BookColorScheme.Fantasy" Label="Fantasy"/>
+        <BookComponent ColorScheme="BookColorScheme.Manga" Label="Manga"/>
+        <BookComponent ColorScheme="BookColorScheme.Crime" Label="Crime"/>
+    </div>
+</div>
 
 @code {
 
-  private void SearchForBook(string searchValue)
-  {
-    Console.WriteLine(searchValue);
-  }
+    private void SearchForBook(string searchValue)
+    {
+        Console.WriteLine(searchValue);
+    }
 
 }

@@ -1,14 +1,17 @@
+using AutoMapper;
 using Boundaries.Persistance.Context;
 using Boundaries.Persistance.Repositories.User;
 using Core.Boundaries.Persistance;
 using Core.User;
 using Microsoft.EntityFrameworkCore;
+using Shared.MappingProfiles.User;
 
 namespace Tests.Utils;
 
 public class BaseUnitTest : IDisposable
 {
     private BookDbContext _context;
+    private IMapper _mapper;
 
     //repositories
     protected IUserRepository UserRepository;
@@ -16,6 +19,7 @@ public class BaseUnitTest : IDisposable
     protected BaseUnitTest()
     {
         ConfigureDatabase();
+        ConfigureMapper();
         InstantiateRepositories();
     }
 
@@ -29,10 +33,20 @@ public class BaseUnitTest : IDisposable
         _context.Database.EnsureDeleted();
         _context.Database.Migrate();
     }
+    
+    private void ConfigureMapper()
+    {
+        var mappingConfig = new MapperConfiguration(mc =>
+        {
+            mc.AddProfile(new UserProfile());
+        });
+
+        _mapper = mappingConfig.CreateMapper();
+    }
 
     private void InstantiateRepositories()
     {
-        UserRepository = new UserRepository(_context);
+        UserRepository = new UserRepository(_context, _mapper);
     }
 
     public void Dispose()

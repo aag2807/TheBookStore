@@ -14,7 +14,6 @@ internal static class ConfigureInjectionDependencies
     internal static void ConfigureDi(this WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<IBookDbContext, BookDbContext>();
-
         builder.Services.AddScoped<IUserRepository, UserRepository>();
         builder.Services.AddScoped<IUserService, UserService>();
     }

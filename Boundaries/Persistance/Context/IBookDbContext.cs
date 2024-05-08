@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Boundaries.Persistance.Models.Author;
 using Boundaries.Persistance.Models.Book;
 using Boundaries.Persistance.Models.Category;
@@ -77,4 +78,19 @@ public interface IBookDbContext
     Task<EntityEntry> AddAsync<TEntity>(TEntity entity);
 
     void AddRange<TEntity>(IEnumerable<TEntity> entities);
+    
+    /// <inheritdoc cref="DbContext.Set{TEntity}()"/>
+    [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Set")]
+    DbSet<TEntity> Set<TEntity>() where TEntity : class;
+    
+    
+    /// <inheritdoc cref="DbContext.BeginTransactionAsync()"/>
+    Task BeginTransaction();
+    
+    /// <inheritdoc cref="DbContext.CommitTransactionAsync()"/>
+    Task Commit();
+
+    /// <inheritdoc cref="DbContext.RollbackTransactionAsync()"/>
+    Task RollBack();
+    
 }

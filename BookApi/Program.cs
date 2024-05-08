@@ -1,7 +1,4 @@
-using System.Diagnostics;
 using BookApi.Extensions;
-using Boundaries.Persistance.Context;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +8,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.ConfigureDi();
 builder.ConfigureDatabase();
+builder.RegisterAutomapperProfilesFromShared();
 
 var app = builder.Build();
 

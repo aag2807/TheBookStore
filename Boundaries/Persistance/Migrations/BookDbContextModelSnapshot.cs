@@ -352,27 +352,27 @@ namespace Boundaries.Migrations
                         new
                         {
                             UserId = 1,
-                            CreatedAt = new DateTime(2024, 5, 6, 13, 20, 9, 861, DateTimeKind.Local).AddTicks(9550),
+                            CreatedAt = new DateTime(2024, 5, 7, 12, 58, 2, 952, DateTimeKind.Local).AddTicks(60),
                             Email = "admin@email.com",
                             IsAdmin = true,
                             IsBlocked = false,
                             IsDeleted = false,
                             IsSubscribedToNewsLetter = false,
                             Password = "admin",
-                            UpdatedAt = new DateTime(2024, 5, 6, 13, 20, 9, 861, DateTimeKind.Local).AddTicks(9550),
+                            UpdatedAt = new DateTime(2024, 5, 7, 12, 58, 2, 952, DateTimeKind.Local).AddTicks(60),
                             Username = "admin"
                         },
                         new
                         {
                             UserId = 2,
-                            CreatedAt = new DateTime(2024, 5, 6, 13, 20, 9, 861, DateTimeKind.Local).AddTicks(9550),
+                            CreatedAt = new DateTime(2024, 5, 7, 12, 58, 2, 952, DateTimeKind.Local).AddTicks(60),
                             Email = "user@email.com",
                             IsAdmin = false,
                             IsBlocked = false,
                             IsDeleted = false,
                             IsSubscribedToNewsLetter = false,
                             Password = "user",
-                            UpdatedAt = new DateTime(2024, 5, 6, 13, 20, 9, 861, DateTimeKind.Local).AddTicks(9550),
+                            UpdatedAt = new DateTime(2024, 5, 7, 12, 58, 2, 952, DateTimeKind.Local).AddTicks(60),
                             Username = "user"
                         });
                 });

@@ -1,3 +1,4 @@
+@using BookClient.Services.State.Layout.actions
 @using Core.User.Aggregates
 @inherits StoreConnectedComponent
 
@@ -21,21 +22,21 @@
                 <ValidationMessage For="() => SubscribeUser.Email"/>
             </div>
         </EditForm>
-        <div class="my-4 w-full flex-row flex">
-            <div class="flex flex-row gap-3">
-                <input type="checkbox"> <span class="ms-3">Remember me!</span>
+        <div class="my-4 w-full flex-row flex gap-5">
+            <div class="flex flex-row">
+                <input type="checkbox"> <span class="ms-2">Remember me!</span>
             </div>
 
             <a href="#" class="ms-auto text-[#314f6a] hover:text-[#314f6a] transition hover:opacity-75">Forgot password?</a>
         </div>
         <hr class="mb-6">
-        <div class="flex flex-row gap-4">
-            <button type="submit" class="ms-auto transition hover:opacity-75 py-2 px-8 rounded-full border border-1 border-[#ebe4da] bg-[#f7efe5] rounded-full w-[fit-content]">
-                Subscribe
+        <div class="flex flex-row gap-4 mb-4">
+            <button @onclick="HandleSubmission" type="submit" class="ms-auto transition hover:opacity-75 py-2 px-8 rounded-full border border-1 border-[#ebe4da] bg-[#f7efe5] rounded-full w-[fit-content]">
+                Login
             </button>
 
-            <button type="submit" class="ms-auto transition hover:opacity-75 py-2 px-8 rounded-full border border-1 border-[#ebe4da] bg-[#f7efe5] rounded-full w-[fit-content]">
-                Subscribe
+            <button @onclick="CloseModal" type="submit" class="ms-auto transition hover:opacity-75 py-2 px-8 rounded-full border border-1 border-[#ebe4da] bg-[#f7efe5] rounded-full w-[fit-content]">
+                Cancel
             </button>
         </div>
     </div>
@@ -56,5 +57,9 @@
         {
         }
     }
-
+    
+    private async Task CloseModal()
+    {
+        Store.Dispatch(new CloseModal());
+    }
 }

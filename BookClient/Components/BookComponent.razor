@@ -1,0 +1,65 @@
+@using BookClient.Enums
+<div class="flex flex-col items-center justify-center relative z-[1]">
+    <div class="scale-[0.@(BookScale)] w-[fit-content] z-[3]">
+        <div
+            id="book-container"
+            class="hover:scale-[0.90] transition cursor-pointer flex relative flex-col w-[150px] rounded-t-[15px] rounded-l-[15px] h-[200px] @(_mainCoverColors[ColorScheme]) relative before:absolute before:w-[30px] before:h-[200px] @(_bookSideColors[ColorScheme]) before:rounded-l-[15px]">
+            <div
+                class="z-[9999] block relative mt-auto bottom-[0px] @(_bottomCoverColors[ColorScheme]) h-[40px] rounded-l-[15px] z-5 w-[150px] after:absolute after:right-0 after:h-[24px] after:w-[140px]  after:bottom-[8px] after:bg-[#f0e8df] after:rounded-l-[18px] after:border-r after:border-r-1 after:border-[#e0d1c1] 
+          before:bg-[#fdc77d] before:w-[25px] before:h-[50px] before:absolute before:z-[99999] before:top-[8px] before:right-[30px]">
+            </div>
+        </div>
+    </div>
+
+    <p class="text-center translate-y-[-33px] relative w-[67px] after:w-[70px] after:h-[16px] after:rounded-full after:bg-[#eee4da] after:block after:absolute after:top-[-32px] h-[16px] after:z-[2]">
+        @Label
+    </p>
+
+</div>
+
+@code {
+    [Parameter] 
+    public double BookScale { get; set; } = 4;
+
+    [Parameter] 
+    public string Label { get; set; } = string.Empty;
+
+    [Parameter] 
+    public BookColorScheme ColorScheme { get; set; } = BookColorScheme.New;
+
+    private Dictionary<BookColorScheme, string> _bookSideColors = new()
+    {
+        { BookColorScheme.New, "before:bg-[#db4d51]" },
+        { BookColorScheme.BestSeller, "before:bg-[#415f7a]" },
+        { BookColorScheme.Audiobooks, "before:bg-[#598d5b]" },
+        { BookColorScheme.Fiction, "before:bg-[#74699c]" },
+        { BookColorScheme.Romance, "before:bg-[#db4d51]" },
+        { BookColorScheme.Fantasy, "before:bg-[#415f7a]" },
+        { BookColorScheme.Manga, "before:bg-[#598d5b]" },
+        { BookColorScheme.Crime, "before:bg-[#74699c]" },
+    };
+
+    private Dictionary<BookColorScheme, string> _mainCoverColors = new()
+    {
+        { BookColorScheme.New, "bg-[#ff7272]" },
+        { BookColorScheme.BestSeller, "bg-[#6283a1]" },
+        { BookColorScheme.Audiobooks, "bg-[#7fb882]" },
+        { BookColorScheme.Fiction, "bg-[#8e82b8]" },
+        { BookColorScheme.Romance, "bg-[#ff7272]" },
+        { BookColorScheme.Fantasy, "bg-[#6283a1]" },
+        { BookColorScheme.Manga, "bg-[#7fb882]" },
+        { BookColorScheme.Crime, "bg-[#8e82b8]" },
+    };
+
+    private Dictionary<BookColorScheme, string> _bottomCoverColors = new()
+    {
+        { BookColorScheme.New, "bg-[#c2424a]" },
+        { BookColorScheme.BestSeller, "bg-[#274764]" },
+        { BookColorScheme.Audiobooks, "bg-[#417444]" },
+        { BookColorScheme.Fiction, "bg-[#655d87]" },
+        { BookColorScheme.Romance, "bg-[#c2424a]" },
+        { BookColorScheme.Fantasy, "bg-[#274764]" },
+        { BookColorScheme.Manga, "bg-[#417444]" },
+        { BookColorScheme.Crime, "bg-[#655d87]" },
+    };
+}

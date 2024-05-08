@@ -8,7 +8,6 @@ namespace Boundaries.Persistance.Models.User;
 [Table("User")]
 public sealed class User
 {
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Key]
     public int UserId { get; set; }
     

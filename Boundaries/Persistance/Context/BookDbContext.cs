@@ -87,4 +87,10 @@ public class BookDbContext : DbContext, IBookDbContext
 
     /// <inheritdoc cref="IBookDbContext.AddAsync{TEntity}(TEntity)"/>
     async Task<EntityEntry> IBookDbContext.AddAsync<TEntity>(TEntity entity) => await AddAsync(entity).ConfigureAwait(true);
+
+    async Task IBookDbContext.BeginTransaction() => await Database.BeginTransactionAsync();
+
+    async Task IBookDbContext.Commit() => await Database.CommitTransactionAsync();
+
+    async Task IBookDbContext.RollBack() => await Database.RollbackTransactionAsync();
 }

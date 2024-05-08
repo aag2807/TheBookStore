@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simbad.State", "Simbad.Stat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simbad.TestApp", "Simbad.TestApp\Simbad.TestApp.csproj", "{C0777C4E-BC1D-406D-9B0C-57FED224091D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{5190C734-D3F6-4576-836F-D3F55E99F482}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +50,9 @@ Global
 		{C0777C4E-BC1D-406D-9B0C-57FED224091D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0777C4E-BC1D-406D-9B0C-57FED224091D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0777C4E-BC1D-406D-9B0C-57FED224091D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5190C734-D3F6-4576-836F-D3F55E99F482}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5190C734-D3F6-4576-836F-D3F55E99F482}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5190C734-D3F6-4576-836F-D3F55E99F482}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5190C734-D3F6-4576-836F-D3F55E99F482}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
