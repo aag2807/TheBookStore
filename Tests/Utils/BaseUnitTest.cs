@@ -26,7 +26,7 @@ public class BaseUnitTest : IDisposable
     private void ConfigureDatabase()
     {
         DbContextOptions<BookDbContext> options = new DbContextOptionsBuilder<BookDbContext>()
-            .UseSqlServer("Data Source=localhost,1433;Initial Catalog=BookStore_test;User Id=sa;Password=yourStrong(!)Password;Encrypt=False;TrustServerCertificate=True;")
+            .UseSqlServer("Data Source=localhost,1433;Initial Catalog=Book_Store_test;User Id=sa;Password=yourStrong(!)Password;Encrypt=False;TrustServerCertificate=True;")
             .Options;
 
         _context = new BookDbContext(options);
@@ -70,5 +70,13 @@ public class BaseUnitTest : IDisposable
         await UserRepository.AddUser(user).ConfigureAwait(true);
         
         return user;
+    }
+
+    /// <summary>
+    /// Clears the existing users in the migration to avoid conflicts
+    /// </summary>
+    protected void DeleteExistingUsers()
+    {
+        _context.Database.ExecuteSqlRaw("DELETE FROM [User];");
     }
 }

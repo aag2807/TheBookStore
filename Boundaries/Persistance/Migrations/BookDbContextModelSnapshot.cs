@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Boundaries.Migrations
+namespace Boundaries.Persistance.Migrations
 {
     [DbContext(typeof(BookDbContext))]
     partial class BookDbContextModelSnapshot : ModelSnapshot
@@ -352,27 +352,27 @@ namespace Boundaries.Migrations
                         new
                         {
                             UserId = 1,
-                            CreatedAt = new DateTime(2024, 5, 7, 12, 58, 2, 952, DateTimeKind.Local).AddTicks(60),
+                            CreatedAt = new DateTime(2024, 5, 8, 9, 54, 30, 217, DateTimeKind.Local).AddTicks(4070),
                             Email = "admin@email.com",
                             IsAdmin = true,
                             IsBlocked = false,
                             IsDeleted = false,
                             IsSubscribedToNewsLetter = false,
                             Password = "admin",
-                            UpdatedAt = new DateTime(2024, 5, 7, 12, 58, 2, 952, DateTimeKind.Local).AddTicks(60),
+                            UpdatedAt = new DateTime(2024, 5, 8, 9, 54, 30, 217, DateTimeKind.Local).AddTicks(4070),
                             Username = "admin"
                         },
                         new
                         {
                             UserId = 2,
-                            CreatedAt = new DateTime(2024, 5, 7, 12, 58, 2, 952, DateTimeKind.Local).AddTicks(60),
+                            CreatedAt = new DateTime(2024, 5, 8, 9, 54, 30, 217, DateTimeKind.Local).AddTicks(4080),
                             Email = "user@email.com",
                             IsAdmin = false,
                             IsBlocked = false,
                             IsDeleted = false,
                             IsSubscribedToNewsLetter = false,
                             Password = "user",
-                            UpdatedAt = new DateTime(2024, 5, 7, 12, 58, 2, 952, DateTimeKind.Local).AddTicks(60),
+                            UpdatedAt = new DateTime(2024, 5, 8, 9, 54, 30, 217, DateTimeKind.Local).AddTicks(4080),
                             Username = "user"
                         });
                 });
