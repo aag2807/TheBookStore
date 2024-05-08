@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Triplex.Validations;
 
-namespace Boundaries.Persistance.Util;
+namespace Core.Boundaries.Persistance.Util;
 
 public static class ExpressionBuilder
 {

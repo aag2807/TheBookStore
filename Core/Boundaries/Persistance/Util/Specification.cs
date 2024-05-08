@@ -1,4 +1,4 @@
-namespace Boundaries.Persistance.Util;
+namespace Core.Boundaries.Persistance.Util;
 
 public class Specification<TEntity> : ISpecification<TEntity> where TEntity : class
 {
@@ -11,6 +11,7 @@ public class Specification<TEntity> : ISpecification<TEntity> where TEntity : cl
     }
 
     public List<Criteria> Criterias { get; }
+
     public string? OrderBy { get; }
 
     public string? OrderByDescending { get; }

@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
-using Boundaries.Persistance.Util;
+using Core.Boundaries.Persistance.Util;
 using Triplex.Validations;
-using ExpressionBuilder = Boundaries.Persistance.Util.ExpressionBuilder;
+using ExpressionBuilder = Core.Boundaries.Persistance.Util.ExpressionBuilder;
 
 namespace Boundaries.Persistance.Extensions;
 

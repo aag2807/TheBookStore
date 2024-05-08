@@ -1,3 +1,5 @@
+using Core.Boundaries.Persistance.Util;
+
 namespace Core.Boundaries.Persistance;
 
 public interface IUserRepository
@@ -20,4 +22,11 @@ public interface IUserRepository
      /// </summary>
      /// <returns> A valid collection of <see cref="Core.User.User"/></returns>
      public Task<IEnumerable<Core.User.User>> GetAllUsers();
+
+     /// <summary>
+     /// Get's a single user by criteria
+     /// </summary>
+     /// <param name="criteria">A valid <see cref="Criteria"/></param>
+     /// <returns>A valid <see cref="Core.User.User"/></returns>
+     Task<Core.User.User> GetUserByCriteria(Criteria criteria);
 }

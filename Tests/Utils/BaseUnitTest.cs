@@ -10,11 +10,11 @@ namespace Tests.Utils;
 
 public class BaseUnitTest : IDisposable
 {
-    private BookDbContext _context;
-    private IMapper _mapper;
+    private BookDbContext _context = null!;
+    private IMapper _mapper = null!;
 
     //repositories
-    protected IUserRepository UserRepository;
+    protected IUserRepository UserRepository = null!;
 
     protected BaseUnitTest()
     {

@@ -1,4 +1,4 @@
-namespace Boundaries.Persistance.Util;
+namespace Core.Boundaries.Persistance.Util;
 
 public sealed class Criteria
 {

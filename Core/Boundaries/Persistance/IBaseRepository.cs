@@ -1,6 +1,6 @@
-using Boundaries.Persistance.Util;
+using Core.Boundaries.Persistance.Util;
 
-namespace Boundaries.Persistance.Base;
+namespace Core.Boundaries.Persistance;
 
 /// <summary>
 /// Manages all operations between <see cref="Carrier"/> and persistence layer
@@ -51,6 +51,14 @@ public interface IBaseRepository<TCore> where TCore : class
     /// <param name="includes">All includes paths to append related entities data</param>
     /// <returns>An instance of found element</returns>
     public Task<TCore?> GetByCriteria(IEnumerable<Criteria> criteria, params string[] includes);
+    
+    /// <summary>
+    /// Get first item by a single specificiation Criteria
+    /// </summary>
+    /// <param name="criteria">Represents an instances of <see cref="Criteria"/> with all filters</param>
+    /// <param name="includes">All includes paths to append related entities data</param>
+    /// <returns>An instance of found element</returns>
+    public Task<TCore?> GetByCriteria(Criteria criteria, params string[] includes);
 
     /// <summary>
     /// Get first item by specification criterias

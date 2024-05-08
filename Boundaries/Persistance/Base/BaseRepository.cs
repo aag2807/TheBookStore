@@ -1,7 +1,8 @@
 using AutoMapper;
 using Boundaries.Persistance.Context;
 using Boundaries.Persistance.Extensions;
-using Boundaries.Persistance.Util;
+using Core.Boundaries.Persistance;
+using Core.Boundaries.Persistance.Util;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Triplex.Validations;
@@ -109,6 +110,20 @@ public abstract class BaseRepository<TEntity, TCore> : IBaseRepository<TCore> wh
 
         IQueryable<TEntity> query = AddIncludesToQuery(includes);
         query = query.ApplyCriterias(criteria.ToList());
+
+        TEntity? result = await query.AsNoTracking().FirstOrDefaultAsync();
+
+        return result is null ? null : _mapper.Map<TCore>(result);
+    }
+    
+    public virtual async Task<TCore?> GetByCriteria(Criteria criteria, params string[] includes)
+    {
+        Arguments.NotNull(criteria, nameof(criteria));
+        Arguments.NotEmptyOrWhiteSpaceOnly(criteria.Value, nameof(Criteria.Value));
+        Arguments.NotEmptyOrWhiteSpaceOnly(criteria.PropertyName, nameof(criteria.PropertyName));
+
+        IQueryable<TEntity> query = AddIncludesToQuery(includes);
+        query = query.ApplyCriterias(new List<Criteria> { criteria });
 
         TEntity? result = await query.AsNoTracking().FirstOrDefaultAsync();
 

@@ -2,6 +2,7 @@ using AutoMapper;
 using Boundaries.Persistance.Base;
 using Boundaries.Persistance.Context;
 using Core.Boundaries.Persistance;
+using Core.Boundaries.Persistance.Util;
 using Microsoft.EntityFrameworkCore;
 using Triplex.Validations;
 
@@ -10,12 +11,10 @@ namespace Boundaries.Persistance.Repositories.User;
 public sealed class UserRepository : BaseRepository<Boundaries.Persistance.Models.User.User, Core.User.User>, IUserRepository
 {
     private readonly IBookDbContext _bookDbContext;
-    private readonly IMapper _mapper;
 
     public UserRepository(IBookDbContext context, IMapper mapper) : base(context, mapper)
     {
         _bookDbContext = context;
-        _mapper = mapper;
     }
 
     /// <inheritdoc />
@@ -54,5 +53,11 @@ public sealed class UserRepository : BaseRepository<Boundaries.Persistance.Model
             .ToListAsync();
 
         return await Task.FromResult(users).ConfigureAwait(true);
+    }
+
+    /// <inheritdoc />
+    async Task<Core.User.User> IUserRepository.GetUserByCriteria(Criteria criteria)
+    {
+        return await GetByCriteria(criteria).ConfigureAwait(true)!;
     }
 }
