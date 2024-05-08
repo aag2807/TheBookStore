@@ -29,4 +29,6 @@ public interface IUserRepository
      /// <param name="criteria">A valid <see cref="Criteria"/></param>
      /// <returns>A valid <see cref="Core.User.User"/></returns>
      Task<Core.User.User> GetUserByCriteria(Criteria criteria);
+     
+     
 }

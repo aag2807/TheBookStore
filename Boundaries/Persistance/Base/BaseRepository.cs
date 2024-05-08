@@ -19,10 +19,7 @@ public abstract class BaseRepository<TEntity, TCore> : IBaseRepository<TCore> wh
     /// </summary>
     protected const int MaxPageSize = 25;
 
-    /// <summary>
-    /// Builds an instance of <see cref="CarrierRepository"/> and loads all its dependencies
-    /// </summary>
-    /// <param name="context">An instance of <see cref="ISMRIContext"/></param>
+    /// <param name="context">An instance of <see cref="IBookDbContext"/></param>
     /// <param name="mapper">An instance of <see cref="IMapper"/></param>
     protected BaseRepository(IBookDbContext context, IMapper mapper)
     {
@@ -72,8 +69,8 @@ public abstract class BaseRepository<TEntity, TCore> : IBaseRepository<TCore> wh
         return _mapper.Map<IEnumerable<TCore>>(result);
     }
 
-    /// <inheritdoc cref="IBaseRepository{TCore}.GetByCriteriaAndThrow(IEnumerable{Criteria}, string[])"/>
-    public virtual async Task<TCore> GetByCriteriaAndThrow(IEnumerable<Criteria> criteria, params string[] includes)
+    /// <inheritdoc cref="IBaseRepository{TCore}.GetByCriteriasAndThrow"/>
+    public virtual async Task<TCore> GetByCriteriasAndThrow(IEnumerable<Criteria> criteria, params string[] includes)
     {
         Arguments.NotNull(criteria, nameof(criteria));
         Arguments.NotNull(includes, nameof(includes));
@@ -86,9 +83,40 @@ public abstract class BaseRepository<TEntity, TCore> : IBaseRepository<TCore> wh
 
         return _mapper.Map<TCore>(result);
     }
+    
+    /// <inheritdoc cref="IBaseRepository{TCore}.GetByCriteriaAndThrow"/>
+    public virtual async Task<TCore> GetByCriteriaAndThrow(Criteria criteria, params string[] includes)
+    {
+        Arguments.NotNull(criteria, nameof(criteria));
+        Arguments.NotNull(includes, nameof(includes));
 
-    /// <inheritdoc cref="IBaseRepository{TCore}.GetByCriteriaAndThrow(IEnumerable{Criteria},string, string[])"/>
-    public virtual async Task<TCore> GetByCriteriaAndThrow(IEnumerable<Criteria> criteria, string errorMessage, params string[] includes)
+        IQueryable<TEntity> query = AddIncludesToQuery(includes);
+
+        TEntity? result = await query.AsNoTracking().ApplyCriterias(new List<Criteria>(){ criteria }).FirstOrDefaultAsync();
+
+        State.IsFalse(result is null, "No se encontró el registro solicitado");
+
+        return _mapper.Map<TCore>(result);
+    }
+    
+    /// <inheritdoc cref="IBaseRepository{TCore}.GetByCriteriaAndThrow"/>
+    public virtual async Task<TCore> GetByCriteriaAndThrow(Criteria criteria, string errorMessage, params string[] includes)
+    {
+        Arguments.NotNull(criteria, nameof(criteria));
+        Arguments.NotNull(includes, nameof(includes));
+        Arguments.NotEmptyOrWhiteSpaceOnly(errorMessage, nameof(errorMessage));
+
+        IQueryable<TEntity> query = AddIncludesToQuery(includes);
+
+        TEntity? result = await query.AsNoTracking().ApplyCriterias(new List<Criteria>(){ criteria }).FirstOrDefaultAsync();
+
+        State.IsFalse(result is null, errorMessage);
+
+        return _mapper.Map<TCore>(result);
+    }
+
+    /// <inheritdoc cref="IBaseRepository{TCore}.GetByCriteriasAndThrow(System.Collections.Generic.IEnumerable{Core.Boundaries.Persistance.Util.Criteria},string,string[])"/>
+    public virtual async Task<TCore> GetByCriteriasAndThrow(IEnumerable<Criteria> criteria, string errorMessage, params string[] includes)
     {
         Arguments.NotNull(criteria, nameof(criteria));
         Arguments.NotNull(includes, nameof(includes));
@@ -103,8 +131,8 @@ public abstract class BaseRepository<TEntity, TCore> : IBaseRepository<TCore> wh
         return _mapper.Map<TCore>(result);
     }
 
-    /// <inheritdoc cref="IBaseRepository{TCore}.GetByCriteria(IEnumerable{Criteria}, string[])"/>
-    public virtual async Task<TCore?> GetByCriteria(IEnumerable<Criteria> criteria, params string[] includes)
+    /// <inheritdoc cref="IBaseRepository{TCore}.GetByCriterias"/>
+    public virtual async Task<TCore?> GetByCriterias(IEnumerable<Criteria> criteria, params string[] includes)
     {
         Arguments.NotNull(criteria, nameof(criteria));
 
@@ -130,12 +158,24 @@ public abstract class BaseRepository<TEntity, TCore> : IBaseRepository<TCore> wh
         return result is null ? null : _mapper.Map<TCore>(result);
     }
 
-    /// <inheritdoc cref="IBaseRepository{TCore}.ExistsByCriteria(IEnumerable{Criteria}, string[])"/>
-    public virtual async Task<bool> ExistsByCriteria(IEnumerable<Criteria> criteria, params string[] includes)
+    /// <inheritdoc cref="IBaseRepository{TCore}.ExistsByCriterias"/>
+    public virtual async Task<bool> ExistsByCriterias(IEnumerable<Criteria> criteria, params string[] includes)
     {
         Arguments.NotNull(criteria, nameof(criteria));
 
         IQueryable<TEntity> query = _context.Set<TEntity>().ApplyCriterias(criteria.ToList());
+
+        bool result = await query.AsNoTracking().AnyAsync();
+
+        return result;
+    }
+    
+    /// <inheritdoc cref="IBaseRepository{TCore}.ExistsByCriteria"/>
+    public virtual async Task<bool> ExistsByCriteria(Criteria criteria, params string[] includes)
+    {
+        Arguments.NotNull(criteria, nameof(criteria));
+
+        IQueryable<TEntity> query = _context.Set<TEntity>().ApplyCriterias(new List<Criteria> { criteria });
 
         bool result = await query.AsNoTracking().AnyAsync();
 

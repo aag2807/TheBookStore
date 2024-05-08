@@ -32,7 +32,26 @@ public interface IBaseRepository<TCore> where TCore : class
     /// <param name="includes">All includes paths to append related entities data</param>
     /// <returns>An instance of found element</returns>
     /// <exception cref="InvalidOperationException"></exception>
-    public Task<TCore> GetByCriteriaAndThrow(IEnumerable<Criteria> criteria, params string[] includes);
+    public Task<TCore> GetByCriteriasAndThrow(IEnumerable<Criteria> criteria, params string[] includes);
+    
+    /// <summary>
+    /// Get first item by a single Criteria and thorws if not found
+    /// </summary>
+    /// <param name="criteria">Represents an instance of <see cref="Criteria"/> with all filters</param>
+    /// <param name="includes">All includes paths to append related entities data</param>
+    /// <returns>An instance of found element</returns>
+    /// <exception cref="InvalidOperationException"></exception>
+    public Task<TCore> GetByCriteriaAndThrow(Criteria criteria, params string[] includes);
+    
+    /// <summary>
+    /// Get first item by a single Criteria and thorws if not found a custom error message
+    /// </summary>
+    /// <param name="criteria">Represents an instance of <see cref="Criteria"/> with all filters</param>
+    /// <param name="errorMessage">Message of error when the entity was no found</param>
+    /// <param name="includes">All includes paths to append related entities data</param>
+    /// <returns>An instance of found element</returns>
+    /// <exception cref="InvalidOperationException"></exception>
+    public Task<TCore> GetByCriteriaAndThrow(Criteria criteria, string errorMessage, params string[] includes);
 
     /// <summary>
     /// Get first item by specifications criteria and thorws if not found with a custom message
@@ -42,7 +61,7 @@ public interface IBaseRepository<TCore> where TCore : class
     /// <param name="includes">All includes paths to append related entities data</param>
     /// <returns>An instance of found element</returns>
     /// <exception cref="InvalidOperationException"></exception>
-    public Task<TCore> GetByCriteriaAndThrow(IEnumerable<Criteria> criteria, string errorMessage, params string[] includes);
+    public Task<TCore> GetByCriteriasAndThrow(IEnumerable<Criteria> criteria, string errorMessage, params string[] includes);
 
     /// <summary>
     /// Get first item by specifications criterias
@@ -50,12 +69,12 @@ public interface IBaseRepository<TCore> where TCore : class
     /// <param name="criteria">Represents a list of instances of <see cref="Criteria"/> with all filters</param>
     /// <param name="includes">All includes paths to append related entities data</param>
     /// <returns>An instance of found element</returns>
-    public Task<TCore?> GetByCriteria(IEnumerable<Criteria> criteria, params string[] includes);
+    public Task<TCore?> GetByCriterias(IEnumerable<Criteria> criteria, params string[] includes);
     
     /// <summary>
     /// Get first item by a single specificiation Criteria
     /// </summary>
-    /// <param name="criteria">Represents an instances of <see cref="Criteria"/> with all filters</param>
+    /// <param name="criteria">Represents an instance of <see cref="Criteria"/> with all filters</param>
     /// <param name="includes">All includes paths to append related entities data</param>
     /// <returns>An instance of found element</returns>
     public Task<TCore?> GetByCriteria(Criteria criteria, params string[] includes);
@@ -66,7 +85,15 @@ public interface IBaseRepository<TCore> where TCore : class
     /// <param name="criteria">Represents a list of instances of <see cref="Criteria"/> with all filters</param>
     /// <param name="includes">All includes paths to append related entities data</param>
     /// <returns>An instance of found element</returns>
-    public Task<bool> ExistsByCriteria(IEnumerable<Criteria> criteria, params string[] includes);
+    public Task<bool> ExistsByCriterias(IEnumerable<Criteria> criteria, params string[] includes);
+    
+    /// <summary>
+    /// Checks if a given entity exists by a single criteria
+    /// </summary>
+    /// <param name="criteria">Represents an instance of <see cref="Criteria"/> with all filters</param>
+    /// <param name="includes">A collection of strings which reflect the joining of entities</param>
+    /// <returns></returns>
+    public Task<bool> ExistsByCriteria(Criteria criteria, params string[] includes);
 
     /// <summary>
     /// Creates the core entity in persistence layer
