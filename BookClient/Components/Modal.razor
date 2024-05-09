@@ -4,8 +4,11 @@
 
 @if (IsModalOpen)
 {
-    // remember to animate backdrop with fade in and fade out
-    <section data-role="backdrop" class="absolute z-[9999999999999] bg-black opacity-[0.8] w-screen h-screen flex flex-col items-center justify-center">
+    <section data-role="modal-container" class="absolute z-[9999999999999] w-screen h-screen flex flex-col items-center justify-center z-1">
+
+        @* remember to animate backdrop with fade in and fade out *@
+        <div @onclick="CloseModal" data-role="modal-backdrop" class="absolute min-w-full min-h-screen bg-black opacity-[0.8] z-[-1]"></div>
+        
         <div class="flex flex-col bg-white min-w-[500px] rounded-[26px] px-5 py-4">
             <header class="flex flex-row w-full ">
                 <button class="ms-auto transition text-[20px] hover:opacity-75" @onclick="CloseModal">&times;</button>

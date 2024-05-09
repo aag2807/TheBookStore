@@ -1,9 +1,9 @@
 @using BookClient.Enums
-<div class="flex flex-col items-center justify-center relative z-[1]">
+<div class="flex flex-col items-center justify-center relative z-[1] max-w-[100px]">
     <div class="scale-[0.@(BookScale)] w-[fit-content] z-[3]">
         <div
             id="book-container"
-            class="hover:scale-[0.90] transition cursor-pointer flex relative flex-col w-[150px] rounded-t-[15px] rounded-l-[15px] h-[200px] @(_mainCoverColors[ColorScheme]) relative before:absolute before:w-[30px] before:h-[200px] @(_bookSideColors[ColorScheme]) before:rounded-l-[15px]">
+            class="translate-y-[33px] hover:scale-[0.90] transition cursor-pointer flex relative flex-col w-[150px] rounded-t-[15px] rounded-l-[15px] h-[200px] @(_mainCoverColors[ColorScheme]) relative before:absolute before:w-[30px] before:h-[200px] @(_bookSideColors[ColorScheme]) before:rounded-l-[15px]">
             <div
                 class="z-[9999] block relative mt-auto bottom-[0px] @(_bottomCoverColors[ColorScheme]) h-[40px] rounded-l-[15px] z-5 w-[150px] after:absolute after:right-0 after:h-[24px] after:w-[140px]  after:bottom-[8px] after:bg-[#f0e8df] after:rounded-l-[18px] after:border-r after:border-r-1 after:border-[#e0d1c1] 
           before:bg-[#fdc77d] before:w-[25px] before:h-[50px] before:absolute before:z-[99999] before:top-[8px] before:right-[30px]">
@@ -14,12 +14,11 @@
     <p class="text-center translate-y-[-33px] relative w-[67px] after:w-[70px] after:h-[16px] after:rounded-full after:bg-[#eee4da] after:block after:absolute after:top-[-32px] h-[16px] after:z-[2]">
         @Label
     </p>
-
 </div>
 
 @code {
     [Parameter] 
-    public double BookScale { get; set; } = 4;
+    public double BookScale { get; set; } = 3;
 
     [Parameter] 
     public string Label { get; set; } = string.Empty;

@@ -1,14 +1,14 @@
 @inherits StoreConnectedComponent
 
-<nav class="flex flex-row px-6 py-4 gap-4 mt-3">
-    <footerm class="relative w-full">
+<nav class="flex flex-row px-6 py-4 gap-4 mt-3 items-center">
+    <div class="relative w-full">
         <div class="absolute h-[30px] top-[50%] translate-y-[-50%] flex items-center left-[15px]">
             <img src="/assets/search-icon.svg" alt="" class="w-[30px] h-[30px]">
         </div>
         <InputText @bind-Value="SearchValue" type="text" placeholder="@Placeholder" class=" @InputClasses"/>
-    </footerm>
+    </div>
 
-    <button @onclick="ClickedToSearchValue" class="transition py-4 w-[150px] text-white rounded-full bg-gradient-to-r from-violet-600 to-orange-500 flex items-center justify-center hover:from-violet-700 hover:to-red-600 ms-auto">
+    <button @onclick="ClickedToSearchValue" class="transition h-[45px] w-[150px] text-white rounded-full bg-gradient-to-r from-violet-600 to-orange-500 flex items-center justify-center hover:from-violet-700 hover:to-red-600 ms-auto">
         search
     </button>
 
@@ -18,7 +18,7 @@
 </nav>
 
 @code {
-    private const string InputClasses = "placeholder-[#64463f] pr-4 focus:outline-0 outline-0 indent-[50px] border border-1 border-[#ebe4da] bg-[#f7efe5] rounded-full h-[60px] w-full text-[#735950]";
+    private const string InputClasses = "placeholder-[#64463f] pr-4 focus:outline-0 outline-0 indent-[50px] border border-1 border-[#ebe4da] bg-[#f7efe5] rounded-full h-[45px] w-full text-[#735950]";
 
     [Parameter] 
     public string Placeholder { get; set; } = string.Empty;
