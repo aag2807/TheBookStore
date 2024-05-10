@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Core.Utils;
 
 namespace Boundaries.Persistance.Models.Book;
 
@@ -33,4 +34,21 @@ public sealed class Book
     public DateTime UpdatedAt { get; set; } = DateTime.Now;
     
     public Author.Author Author { get; set; } = new();
+    public string Category { get; internal set; } = String.Empty;
+
+    public Core.Books.Book ToCoreEntity()
+    {
+        Core.Books.Book coreEntity = new();
+        ObjectUtils.Assign(coreEntity, this);
+        
+        return coreEntity;
+    }
+
+    public static Book FromCoreEntity(Core.Books.Book coreEntity)
+    {
+        Book dbEntity = new();
+        ObjectUtils.Assign(dbEntity, coreEntity);
+        
+        return dbEntity;
+    }
 }
