@@ -1,4 +1,5 @@
 using Core.Boundaries.Persistance;
+using Core.Boundaries.Persistance.Util;
 using Core.User.Aggregates;
 using Triplex.Validations;
 
@@ -41,5 +42,24 @@ public sealed class UserService : IUserService
     async Task<IEnumerable<User>> IUserService.GetAllUsers()
     {
         return await _userRepository.GetAllUsers().ConfigureAwait(true);
+    }
+
+    /// <inheritdoc />
+    async Task<User> IUserService.RegisterUser(RegisterUser subscribeUser)
+    {
+        Arguments.NotNull(subscribeUser, nameof(subscribeUser));
+        Arguments.NotEmptyOrWhiteSpaceOnly(subscribeUser.Username, nameof(subscribeUser.Username));
+        Arguments.NotEmptyOrWhiteSpaceOnly(subscribeUser.Password, nameof(subscribeUser.Password));
+        Arguments.NotEmptyOrWhiteSpaceOnly(subscribeUser.Email, nameof(subscribeUser.Email));
+
+        User newUser = new User(subscribeUser.Username, subscribeUser.Password, subscribeUser.Email, false, false);
+        await _userRepository.AddUser(newUser).ConfigureAwait(true);
+        
+        return newUser;
+    }
+
+    Task<User> IUserService.SubscribeToNewsLetter(SubscribeUser subscribeUser)
+    {
+        throw new NotImplementedException();
     }
 }

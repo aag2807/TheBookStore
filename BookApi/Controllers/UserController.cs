@@ -43,4 +43,25 @@ public class UserController : ControllerBase
 
         return Ok(users);
     }
+    
+    [HttpPost("register-user")]
+    public async Task<IActionResult> RegisterUser([FromBody] RegisterUser registerUser)
+    {
+        Arguments.NotNull(registerUser, nameof(registerUser));
+
+        User user = await _userService.RegisterUser(registerUser).ConfigureAwait(true);
+
+        return Ok(user);
+    }
+    
+        
+    [HttpPost("subscribe-to-newsletter-user")]
+    public async Task<IActionResult> SubscribeToNewsLetter([FromBody] SubscribeUser registerUser)
+    {
+        Arguments.NotNull(registerUser, nameof(registerUser));
+
+        User user = await _userService.SubscribeToNewsLetter(registerUser).ConfigureAwait(true);
+
+        return Ok(user);
+    }
 }

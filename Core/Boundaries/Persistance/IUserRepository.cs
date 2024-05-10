@@ -29,4 +29,11 @@ public interface IUserRepository
      /// <param name="criteria">A valid <see cref="Criteria"/></param>
      /// <returns>A valid <see cref="Core.User.User"/></returns>
      public Task<Core.User.User> GetUserByCriteria(Criteria criteria);
+     
+     /// <summary>
+     /// 
+     /// </summary>
+     /// <param name="criteria"></param>
+     /// <returns></returns>
+     public Task<bool> UserExists(Criteria criteria);
 }

@@ -60,4 +60,10 @@ public sealed class UserRepository : BaseRepository<Boundaries.Persistance.Model
     {
         return await GetByCriteria(criteria).ConfigureAwait(true)!;
     }
+    
+    /// <inheritdoc />
+    async Task<bool> IUserRepository.UserExists(Criteria criteria)
+    {
+        return await ExistsByCriteria(criteria).ConfigureAwait(true);
+    }
 }

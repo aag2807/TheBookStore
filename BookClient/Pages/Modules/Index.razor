@@ -1,14 +1,14 @@
 ﻿@page "/"
 @using BookClient.Enums
 
-<PageTitle></PageTitle>
+<PageTitle>Book Store</PageTitle>
 
 <section >
     <SearchComponentForCart Placeholder="Search for books" SearchValueChanged="SearchForBook"/>
 </section>
 
 <div class="flex px-6">
-    <div class="flex flex-row gap-4 w-full max-w-full overflow-x-auto">
+    <div class="flex flex-row gap-4 w-full max-w-full overflow-x-auto overflow-y-hidden h-[150px]">
         <BookComponent Label="E Books"/>
         <BookComponent Label="New"/>
         <BookComponent ColorScheme="BookColorScheme.BestSeller"  Label="Bestsellers"/>
@@ -22,10 +22,8 @@
 </div>
 
 @code {
-
     private void SearchForBook(string searchValue)
     {
         Console.WriteLine(searchValue);
     }
-
 }

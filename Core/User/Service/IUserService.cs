@@ -22,4 +22,18 @@ public interface IUserService
     /// </summary>
     /// <returns>A valid collection of <see cref="User"/></returns>
     public Task<IEnumerable<User>> GetAllUsers();
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="subscribeUser"></param>
+    /// <returns></returns>
+    public Task<User> RegisterUser(RegisterUser subscribeUser);
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="subscribeUser"></param>
+    /// <returns></returns>
+    public Task<User> SubscribeToNewsLetter(SubscribeUser subscribeUser);
 }
