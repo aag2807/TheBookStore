@@ -6,14 +6,14 @@ public sealed class Book
     {
     }
 
-    public Book(string author, string category) {
-        Author = author;
+    public Book(string authorId, string category) {
+        AuthorId = authorId;
         Category = category;
     }
 
     public int BookId { get; set;}
 
-    public string Author {get; set;} = String.Empty;
+    public string? AuthorId {get; set;}
 
     public string Category {get; set;} = String.Empty;
 

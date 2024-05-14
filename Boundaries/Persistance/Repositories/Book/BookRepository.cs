@@ -18,6 +18,7 @@ public sealed class BookRepository : BaseRepository<Boundaries.Persistance.Model
         _bookDbContext = context;
     }
 
+    /// <inheritdoc />
     async Task<Core.Books.Book> IBookRepository.AddBook(Core.Books.Book book)
     {
         Arguments.NotNull(book, nameof(book));
@@ -30,15 +31,16 @@ public sealed class BookRepository : BaseRepository<Boundaries.Persistance.Model
         return book;
     }
 
+    /// <inheritdoc />
     async Task<Core.Books.Book> IBookRepository.GetBook(Core.Books.Book book)
     {
         Arguments.NotNull(book, nameof(book));
         Arguments.GreaterThan(book.BookId, 0, nameof(book.BookId));
-        Arguments.NotEmptyOrWhiteSpaceOnly(book.Author, nameof(book.Author));
+        Arguments.NotEmptyOrWhiteSpaceOnly(book.AuthorId, nameof(book.AuthorId));
         Arguments.NotEmptyOrWhiteSpaceOnly(book.Category, nameof(book.Category));
 
         Models.Book.Book? dbBook = await _bookDbContext.Book
-            .FirstOrDefaultAsync(dbBook => dbBook.BookId == book.BookId && dbBook.Author.ToString() == book.Author && dbBook.Category == book.Category)
+            .FirstOrDefaultAsync(dbBook => dbBook.BookId == book.BookId && dbBook.Author.ToString() == book.AuthorId && dbBook.Category == book.Category)
             .ConfigureAwait(true);
 
         Arguments.NotNull(dbBook, "Book not found");
