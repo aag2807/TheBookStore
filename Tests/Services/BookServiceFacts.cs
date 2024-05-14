@@ -19,7 +19,7 @@ public sealed class BookServiceFacts : BaseUnitTest
     {
         Core.Books.Book newBook = new()
         {
-            Author = string.Empty,
+            AuthorId = string.Empty,
             Category = string.Empty
         };
 
@@ -31,7 +31,7 @@ public sealed class BookServiceFacts : BaseUnitTest
     {
         Core.Books.Book newBook = new()
         {
-            Author = "DUMMY",
+            AuthorId = "DUMMY",
             Category = "DUMMY"
         };
 
@@ -39,7 +39,7 @@ public sealed class BookServiceFacts : BaseUnitTest
         Core.Books.Book book = await BookRepository.AddBook(newBook).ConfigureAwait(true);
 
         Assert.NotNull(book);
-        Assert.Equal("DUMMY", book.Author);
+        Assert.Equal("DUMMY", book.AuthorId);
         Assert.Equal("DUMMY", book.Category);
     }
 }

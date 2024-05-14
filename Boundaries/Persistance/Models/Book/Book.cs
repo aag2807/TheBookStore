@@ -33,7 +33,7 @@ public sealed class Book
     [Required]
     public DateTime UpdatedAt { get; set; } = DateTime.Now;
     
-    public Author.Author Author { get; set; } = new();
+    public Author.Author AuthorId { get; set; } = new();
     public string Category { get; internal set; } = String.Empty;
 
     public Core.Books.Book ToCoreEntity()

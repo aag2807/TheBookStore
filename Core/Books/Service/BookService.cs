@@ -17,7 +17,7 @@ public sealed class BookService : IBookService
     async Task IBookService.AddBook(Book book)
     {
         Arguments.NotNull(book, nameof(book));
-        Arguments.NotEmptyOrWhiteSpaceOnly(book.Author, nameof(book.Author));
+        Arguments.NotEmptyOrWhiteSpaceOnly(book.AuthorId, nameof(book.AuthorId));
         Arguments.NotEmptyOrWhiteSpaceOnly(book.Category, nameof(book.Category));
 
         await _bookRepository.AddBook(book).ConfigureAwait(true);

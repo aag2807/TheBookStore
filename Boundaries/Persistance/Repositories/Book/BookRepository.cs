@@ -40,7 +40,7 @@ public sealed class BookRepository : BaseRepository<Boundaries.Persistance.Model
         Arguments.NotEmptyOrWhiteSpaceOnly(book.Category, nameof(book.Category));
 
         Models.Book.Book? dbBook = await _bookDbContext.Book
-            .FirstOrDefaultAsync(dbBook => dbBook.BookId == book.BookId && dbBook.Author.ToString() == book.AuthorId && dbBook.Category == book.Category)
+            .FirstOrDefaultAsync(dbBook => dbBook.BookId == book.BookId && dbBook.AuthorId.ToString() == book.AuthorId && dbBook.Category == book.Category)
             .ConfigureAwait(true);
 
         Arguments.NotNull(dbBook, "Book not found");
