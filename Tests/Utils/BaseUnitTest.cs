@@ -1,6 +1,7 @@
 using AutoMapper;
 using Boundaries.Persistance.Context;
 using Boundaries.Persistance.Repositories.User;
+using Boundaries.Persistance.Repositories.Book;
 using Core.Boundaries.Persistance;
 using Core.User;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ public class BaseUnitTest : IDisposable
 
     //repositories
     protected IUserRepository UserRepository = null!;
+    protected IBookRepository BookRepository = null!;
 
     protected BaseUnitTest()
     {
@@ -49,6 +51,7 @@ public class BaseUnitTest : IDisposable
     private void InstantiateRepositories()
     {
         UserRepository = new UserRepository(_context, _mapper);
+        BookRepository = new BookRepository(_context, _mapper);
     }
 
     public void Dispose()
@@ -68,7 +71,7 @@ public class BaseUnitTest : IDisposable
     /// <returns>A valid instance of <see cref="User"/></returns>
     protected async Task<User> CreateUser(string username, string password, string email = "", bool isAdmin = false, bool isBlocked = false)
     {
-        User user = new User(username: username, password: password, email: string.IsNullOrWhiteSpace(email) ? $"{username}@{username}.com": email, isAdmin: isAdmin, isBlocked: isBlocked);
+        User user = new(username: username, password: password, email: string.IsNullOrWhiteSpace(email) ? $"{username}@{username}.com": email, isAdmin: isAdmin, isBlocked: isBlocked);
         await UserRepository.AddUser(user).ConfigureAwait(true);
         
         return user;
